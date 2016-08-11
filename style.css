@@ -1,0 +1,21 @@
+
+body {
+
+}
+
+.map {
+    border: solid;
+    border-width: 1px;
+    width: 1202px;
+    height: 410px;
+}
+
+.cell {
+
+    border-top: solid;
+    border-right: solid;
+    border-width: 1px;
+    float: left;
+    height: 12px;
+    width: 12px;
+}

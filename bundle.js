@@ -59,6 +59,10 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _cell = __webpack_require__(/*! ./components/cell */ 175);
+	
+	var _cell2 = _interopRequireDefault(_cell);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67,23 +71,56 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	//Import created components
+	
+	
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
 	
-	    function App() {
+	    function App(props) {
 	        _classCallCheck(this, App);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
-	    }
+	        //Set up initial map space
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+	
+	        var map = [];
+	
+	        for (var i = 1; i <= 8000; i++) {
+	
+	            map.push(false);
+	        }
+	
+	        //Set the initial state
+	        _this.state = {
+	            map: map
+	        };
+	
+	        return _this;
+	    } //End constructor
+	
 	
 	    _createClass(App, [{
+	        key: "check_cell",
+	        value: function check_cell(index) {
+	
+	            console.log("Cell: " + index);
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	
+	            //Get initial variables
+	            var map = this.state.map;
+	            var cells = [];
+	            for (var i = 0; i < 3400; i++) {
+	
+	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, check_cell: this.check_cell }));
+	            }
+	
 	            return _react2.default.createElement(
-	                "h2",
-	                null,
-	                "React up and running!"
+	                "div",
+	                { className: "map" },
+	                cells
 	            );
 	        }
 	    }]);
@@ -22055,6 +22092,41 @@
 	var ReactMount = __webpack_require__(/*! ./ReactMount */ 167);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 175 */
+/*!****************************!*\
+  !*** ./components/cell.js ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Cell = function Cell(props) {
+	
+	    //Get needed variables
+	    var index = props.count;
+	
+	    //Test function
+	    var check_cell = props.check_cell;
+	
+	    return _react2.default.createElement("div", { onClick: function onClick() {
+	            check_cell(index);
+	        }, className: "cell" });
+	}; //End cell component
+	
+	
+	exports.default = Cell;
 
 /***/ }
 /******/ ]);

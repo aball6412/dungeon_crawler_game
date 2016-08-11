@@ -19,3 +19,13 @@ body {
     height: 12px;
     width: 12px;
 }
+
+.user_cell {
+    background: red;
+    border-top: solid;
+    border-right: solid;
+    border-width: 1px;
+    float: left;
+    height: 12px;
+    width: 12px;
+}

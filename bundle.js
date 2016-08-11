@@ -90,37 +90,115 @@
 	            map.push(false);
 	        }
 	
+	        map[1649] = true;
+	
+	        //Bind needed functions
+	        _this.move_user = _this.move_user.bind(_this);
+	
 	        //Set the initial state
 	        _this.state = {
-	            map: map
+	            map: map,
+	            user_position: 1649
 	        };
 	
 	        return _this;
 	    } //End constructor
 	
 	
+	    //THIS FUNCTION IS FOR DEVELOPMENT HELP ONLY
+	
+	
 	    _createClass(App, [{
 	        key: "check_cell",
 	        value: function check_cell(index) {
-	
 	            console.log("Cell: " + index);
+	        }
+	    }, {
+	        key: "move_user",
+	        value: function move_user(event) {
+	
+	            //MAY NEED TO PREVENT DEFAULT
+	
+	
+	            if (event.keyCode === 37) {
+	
+	                //Get the map and current user position
+	                var map = this.state.map;
+	                var user_position = this.state.user_position;
+	
+	                //Move the user to the left
+	                map[user_position - 1] = true;
+	                map[user_position] = false;
+	
+	                //Set the new map and new user position
+	                this.setState({ map: map, user_position: user_position - 1 });
+	            } else if (event.keyCode === 38) {
+	
+	                //Get the map and current user position
+	                var map = this.state.map;
+	                var user_position = this.state.user_position;
+	
+	                //Move the user up
+	                map[user_position - 100] = true;
+	                map[user_position] = false;
+	
+	                //Set the new map and new user position
+	                this.setState({ map: map, user_position: user_position - 100 });
+	            } else if (event.keyCode === 39) {
+	
+	                //Get the map and current user position
+	                var map = this.state.map;
+	                var user_position = this.state.user_position;
+	
+	                //Move the user up
+	                map[user_position + 1] = true;
+	                map[user_position] = false;
+	
+	                //Set the new map and new user position
+	                this.setState({ map: map, user_position: user_position + 1 });
+	            } else if (event.keyCode === 40) {
+	
+	                //Get the map and current user position
+	                var map = this.state.map;
+	                var user_position = this.state.user_position;
+	
+	                //Move the user up
+	                map[user_position + 100] = true;
+	                map[user_position] = false;
+	
+	                //Set the new map and new user position
+	                this.setState({ map: map, user_position: user_position + 100 });
+	            }
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
+	            var _this2 = this;
 	
 	            //Get initial variables
 	            var map = this.state.map;
 	            var cells = [];
+	
 	            for (var i = 0; i < 3400; i++) {
 	
-	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, check_cell: this.check_cell }));
+	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, cell_state: map[i], check_cell: this.check_cell }));
 	            }
 	
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "map" },
-	                cells
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "text_box" },
+	                    _react2.default.createElement("input", { onKeyDown: function onKeyDown(event) {
+	                            _this2.move_user(event);
+	                        }, type: "text" })
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "map" },
+	                    cells
+	                )
 	            );
 	        }
 	    }]);
@@ -22116,13 +22194,22 @@
 	
 	    //Get needed variables
 	    var index = props.count;
+	    var cell_state = props.cell_state;
 	
 	    //Test function
 	    var check_cell = props.check_cell;
 	
-	    return _react2.default.createElement("div", { onClick: function onClick() {
-	            check_cell(index);
-	        }, className: "cell" });
+	    if (cell_state) {
+	
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                check_cell(index);
+	            }, className: "user_cell" });
+	    } else {
+	
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                check_cell(index);
+	            }, className: "cell" });
+	    }
 	}; //End cell component
 	
 	

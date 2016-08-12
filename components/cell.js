@@ -27,6 +27,14 @@ var Cell = function(props) {
         );
         
     }
+    
+    else if (cell_state === "path") {
+        
+        return (
+            <div onClick={ () => { check_cell(index) }} className="path"></div>
+        );
+    }
+    
     else {
         
         return (

@@ -50,4 +50,14 @@ body {
     width: 24px;
 }
 
+.enemy {
+    background: purple;
+    border-top: solid;
+    border-right: solid;
+    border-width: 1px;
+    float: left;
+    height: 24px;
+    width: 24px;
+}
+
 

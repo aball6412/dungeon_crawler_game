@@ -128,9 +128,39 @@
 	                map[i] = "wall";
 	            }
 	
+	            //Then layout the map path
+	            //Using variable "Map" (capital M) which we imported from maps.js
 	            for (var j in _maps2.default) {
 	                map[_maps2.default[j]] = "path";
 	            }
+	
+	            //Layout enemies, health, weapons
+	
+	            //Pick 10 random path cells for enemies
+	            //Random number between 0 and number of cells in the map
+	            var enemy_number = 10;
+	
+	            var count = 0;
+	            while (count < 10) {
+	                //Get random number between 0 and Map length
+	                var random = Math.floor(Math.random() * _maps2.default.length + 0);
+	
+	                //Use random number to place an enemy at that index
+	                var enemy_location = _maps2.default[random];
+	                map[enemy_location] = "enemy";
+	
+	                count = 0;
+	                for (var i = 0; i < map.length; i++) {
+	                    if (map[i] === "enemy") {
+	                        count++;
+	                    }
+	                }
+	            }
+	
+	            //Pick random path cells for health
+	
+	            //Pick 3 random path cells for weapons
+	            for (var k in _maps2.default) {}
 	
 	            //Set the user position
 	            var user_position = 424;
@@ -149,19 +179,34 @@
 	
 	            console.log("Cell: " + index);
 	
-	            //        //Set up variables
-	            //        var map = this.state.map;
-	            //        var make_map = this.state.make_map;
-	            //
-	            //        //Make clicked cell part of the path
-	            //        map[index] = "path";
-	            //        
-	            //
-	            //        make_map.push(index);
-	            //        console.log(make_map);
-	            //        
-	            //        this.setState({ map: map, make_map: make_map });
-	        }
+	            /****
+	            
+	            FOLLOWING CODE IS TO VISUALLY SET UP MAP
+	            DISPLAYS CELLS IN CONSOLE
+	            TO USE: IN CONSOLE LIST AS VARIABLE
+	            THEN CONVERT TO COMMA SEPARATED STRING
+	            THEN DISPLAY FULL STRING IN CONSOLE
+	            THEN CAN COPY AND ADD STRING TO "maps.js" COMPONENT IN SITE
+	            
+	            ****/
+	
+	            /****
+	            
+	            //Set up variables
+	            var map = this.state.map;
+	            var make_map = this.state.make_map;
+	             //Make clicked cell part of the path
+	            map[index] = "path";
+	            
+	             make_map.push(index);
+	            console.log(make_map);
+	            
+	            this.setState({ map: map, make_map: make_map });
+	            
+	            ****/
+	        } //End check cell function
+	
+	
 	    }, {
 	        key: "move_user",
 	        value: function move_user(event) {
@@ -239,8 +284,6 @@
 	                    //Move the user up
 	                    map[user_position + 50] = true;
 	                    map[user_position] = "path";
-	
-	                    console.log(user_position);
 	
 	                    //Move the board along if we aren't at the bottom
 	                    if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
@@ -22289,6 +22332,11 @@
 	        return _react2.default.createElement("div", { onClick: function onClick() {
 	                check_cell(index);
 	            }, className: "path" });
+	    } else if (cell_state === "enemy") {
+	
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                check_cell(index);
+	            }, className: "enemy" });
 	    } else {
 	
 	        return _react2.default.createElement("div", { onClick: function onClick() {

@@ -35,6 +35,13 @@ var Cell = function(props) {
         );
     }
     
+    else if (cell_state === "enemy") {
+        
+        return (
+            <div onClick={ () => { check_cell(index) }} className="enemy"></div>
+        );
+    }
+    
     else {
         
         return (

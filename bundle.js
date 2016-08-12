@@ -128,6 +128,10 @@
 	                map[i] = "wall";
 	            }
 	
+	            //Set the user position
+	            var user_position = 424;
+	            map[user_position] = true;
+	
 	            //Then layout the map path
 	            //Using variable "Map" (capital M) which we imported from maps.js
 	            for (var j in _maps2.default) {
@@ -137,17 +141,20 @@
 	            //Layout enemies, health, weapons
 	
 	            //Pick 10 random path cells for enemies
-	            //Random number between 0 and number of cells in the map
 	            var enemy_number = 10;
 	
 	            var count = 0;
-	            while (count < 10) {
+	            while (count < enemy_number) {
 	                //Get random number between 0 and Map length
 	                var random = Math.floor(Math.random() * _maps2.default.length + 0);
 	
 	                //Use random number to place an enemy at that index
 	                var enemy_location = _maps2.default[random];
-	                map[enemy_location] = "enemy";
+	
+	                //Make sure space isn't taken by something else before placing
+	                if (map[enemy_location] === "path") {
+	                    map[enemy_location] = "enemy";
+	                }
 	
 	                count = 0;
 	                for (var i = 0; i < map.length; i++) {
@@ -155,16 +162,35 @@
 	                        count++;
 	                    }
 	                }
-	            }
+	            } //End while loop
+	
 	
 	            //Pick random path cells for health
 	
 	            //Pick 3 random path cells for weapons
-	            for (var k in _maps2.default) {}
+	            var weapon_numer = 3;
 	
-	            //Set the user position
-	            var user_position = 424;
-	            map[user_position] = true;
+	            var count = 0;
+	            while (count < weapon_numer) {
+	                //Get random number between 0 and Map length
+	                var random = Math.floor(Math.random() * _maps2.default.length + 0);
+	
+	                //Use random number to place an enemy at that index
+	                var weapon_location = _maps2.default[random];
+	
+	                //Make sure space isn't taken by something else before placing
+	                if (map[weapon_location] === "path") {
+	                    map[weapon_location] = "weapon";
+	                }
+	
+	                count = 0;
+	                for (var i = 0; i < map.length; i++) {
+	                    if (map[i] === "weapon") {
+	                        count++;
+	                    }
+	                }
+	            } //End while loop
+	
 	
 	            //Set state
 	            this.setState({ map: map, user_position: user_position });
@@ -22337,6 +22363,11 @@
 	        return _react2.default.createElement("div", { onClick: function onClick() {
 	                check_cell(index);
 	            }, className: "enemy" });
+	    } else if (cell_state === "weapon") {
+	
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                check_cell(index);
+	            }, className: "weapon" });
 	    } else {
 	
 	        return _react2.default.createElement("div", { onClick: function onClick() {

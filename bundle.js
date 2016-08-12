@@ -139,14 +139,6 @@
 	                map[i] = "wall";
 	            }
 	
-	            //        for (var i = 0; i <= 2950; (i + 50)) {
-	            //            map[i] = "dead";
-	            //        }
-	            //        
-	            //        for (var i = 49; i <= 2999; (i + 50)) {
-	            //            map[i] = "dead";
-	            //        }
-	
 	            //TEMPORARILY PUT USER IN MIDDLE OF SCREEN FOR TESTING
 	            map[424] = true;
 	
@@ -167,21 +159,24 @@
 	        value: function move_user(event) {
 	
 	            if (event.keyCode === 37) {
-	                //Left
+	                //Left Arrow
 	
 	
 	                //Get the map and current user position
 	                var map = this.state.map;
 	                var user_position = this.state.user_position;
 	
-	                //Move the user to the left
-	                map[user_position - 1] = true;
-	                map[user_position] = false;
+	                if (map[user_position - 1] != "wall") {
 	
-	                //Set the new map and new user position
-	                this.setState({ map: map, user_position: user_position - 1 });
+	                    //Move the user to the left
+	                    map[user_position - 1] = true;
+	                    map[user_position] = false;
+	
+	                    //Set the new map and new user position
+	                    this.setState({ map: map, user_position: user_position - 1 });
+	                }
 	            } else if (event.keyCode === 38) {
-	                //Up
+	                //Up Arrow
 	
 	                //Get the map and current user position
 	                var map = this.state.map;
@@ -189,34 +184,41 @@
 	                var view_start = this.state.view_start;
 	                var view_end = this.state.view_end;
 	
-	                //Move the user up
-	                map[user_position - 50] = true;
-	                map[user_position] = false;
+	                //If moving up is not a wall
+	                if (map[user_position - 50] != "wall") {
 	
-	                if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
-	                    this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50 });
-	                } else {
-	                    //Set the new map and new user position
-	                    this.setState({ map: map, user_position: user_position - 50 });
-	                }
+	                    //Move the user up
+	                    map[user_position - 50] = true;
+	                    map[user_position] = false;
+	
+	                    if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
+	                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50 });
+	                    } else {
+	                        //Set the new map and new user position
+	                        this.setState({ map: map, user_position: user_position - 50 });
+	                    }
+	                } //End big if statement
+	
 	            } else if (event.keyCode === 39) {
-	                //Right
+	                //Right Arrow
 	
 	
 	                //Get the map and current user position
 	                var map = this.state.map;
 	                var user_position = this.state.user_position;
 	
-	                //Move the user up
-	                map[user_position + 1] = true;
-	                map[user_position] = false;
+	                if (map[user_position + 1] != "wall") {
 	
-	                //Set the new map and new user position
-	                this.setState({ map: map, user_position: user_position + 1 });
+	                    //Move the user up
+	                    map[user_position + 1] = true;
+	                    map[user_position] = false;
+	
+	                    //Set the new map and new user position
+	                    this.setState({ map: map, user_position: user_position + 1 });
+	                }
 	            } else if (event.keyCode === 40) {
-	                //Down
+	                //Down Arrow
 	
-	                console.log("down");
 	
 	                //Get the map, current user position, and view port
 	                var map = this.state.map;
@@ -224,19 +226,24 @@
 	                var view_start = this.state.view_start;
 	                var view_end = this.state.view_end;
 	
-	                //Move the user up
-	                map[user_position + 50] = true;
-	                map[user_position] = false;
+	                if (map[user_position + 50] != "wall") {
 	
-	                //Move the board along if we aren't at the bottom
-	                if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
-	                    this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50 });
-	                } else {
-	                    //Set the new map and new user position
-	                    this.setState({ map: map, user_position: user_position + 50 });
-	                }
-	            }
-	        }
+	                    //Move the user up
+	                    map[user_position + 50] = true;
+	                    map[user_position] = false;
+	
+	                    //Move the board along if we aren't at the bottom
+	                    if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
+	                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50 });
+	                    } else {
+	                        //Set the new map and new user position
+	                        this.setState({ map: map, user_position: user_position + 50 });
+	                    }
+	                } //End big if statement
+	            } //End else if statement
+	        } //End move user function
+	
+	
 	    }, {
 	        key: "render",
 	        value: function render() {

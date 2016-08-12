@@ -11,6 +11,25 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         
+ 
+        //Set the initial state
+        this.state = {
+            map: [],
+            user_position: null,
+        }
+        
+        
+        
+        
+    } //End constructor
+    
+    componentDidMount() {
+        document.addEventListener("keydown", this.move_user.bind(this));
+        this.setup();
+    }
+    
+    setup() {
+        
         //Set up initial map space
         var map = [];
         
@@ -19,19 +38,12 @@ class App extends React.Component {
             map.push(false);
         }
     
-        map[1649] = true;
+        //TEMPORARILY PUT USER IN MIDDLE OF SCREEN FOR TESTING
+        map[424] = true;
         
-        //Bind needed functions
-        this.move_user = this.move_user.bind(this);
+        this.setState({ map: map, user_position: 424 })
         
-        //Set the initial state
-        this.state = {
-            map: map,
-            user_position: 1649
-        }
-        
-        
-    } //End constructor
+    } //End set up function
     
     
     
@@ -42,11 +54,13 @@ class App extends React.Component {
     }
     
     
+   
+
     move_user(event) {
         
-        //MAY NEED TO PREVENT DEFAULT
+        console.log("click");
         
-        
+ 
         if (event.keyCode === 37) {
             
             //Get the map and current user position
@@ -70,11 +84,11 @@ class App extends React.Component {
             var user_position = this.state.user_position;
             
             //Move the user up
-            map[user_position - 100] = true;
+            map[user_position - 50] = true;
             map[user_position] = false;
             
             //Set the new map and new user position
-            this.setState({ map: map, user_position: user_position - 100 });
+            this.setState({ map: map, user_position: user_position - 50 });
             
         }
         
@@ -101,11 +115,11 @@ class App extends React.Component {
             var user_position = this.state.user_position;
             
             //Move the user up
-            map[user_position + 100] = true;
+            map[user_position + 50] = true;
             map[user_position] = false;
             
             //Set the new map and new user position
-            this.setState({ map: map, user_position: user_position + 100 });
+            this.setState({ map: map, user_position: user_position + 50 });
             
         }
         
@@ -123,7 +137,7 @@ class App extends React.Component {
         var map = this.state.map;
         var cells = [];
         
-        for (var i = 0; i < 3400; i++) {
+        for (var i = 0; i < 850; i++) {
             
             cells.push(<Cell key={ i } count={ i } cell_state={ map[i] } check_cell={ this.check_cell } />);
             
@@ -131,20 +145,11 @@ class App extends React.Component {
         
         return (
         
-            <div>
-                 
-                       
-                <div className="text_box">
-                           <input onKeyDown={ (event) => { this.move_user(event) } } type="text" />
-                </div>
-                       
-                       
+
                 <div className="map">
                     { cells }
                 </div>
-                     
-                       
-            </div>
+
         
         );
     }

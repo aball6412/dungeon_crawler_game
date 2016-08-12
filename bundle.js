@@ -80,35 +80,45 @@
 	    function App(props) {
 	        _classCallCheck(this, App);
 	
-	        //Set up initial map space
+	        //Set the initial state
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 	
-	        var map = [];
-	
-	        for (var i = 1; i <= 8000; i++) {
-	
-	            map.push(false);
-	        }
-	
-	        map[1649] = true;
-	
-	        //Bind needed functions
-	        _this.move_user = _this.move_user.bind(_this);
-	
-	        //Set the initial state
 	        _this.state = {
-	            map: map,
-	            user_position: 1649
+	            map: [],
+	            user_position: null
 	        };
 	
 	        return _this;
 	    } //End constructor
 	
-	
-	    //THIS FUNCTION IS FOR DEVELOPMENT HELP ONLY
-	
-	
 	    _createClass(App, [{
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            document.addEventListener("keydown", this.move_user.bind(this));
+	            this.setup();
+	        }
+	    }, {
+	        key: "setup",
+	        value: function setup() {
+	
+	            //Set up initial map space
+	            var map = [];
+	
+	            for (var i = 1; i <= 8000; i++) {
+	
+	                map.push(false);
+	            }
+	
+	            //TEMPORARILY PUT USER IN MIDDLE OF SCREEN FOR TESTING
+	            map[424] = true;
+	
+	            this.setState({ map: map, user_position: 424 });
+	        } //End set up function
+	
+	
+	        //THIS FUNCTION IS FOR DEVELOPMENT HELP ONLY
+	
+	    }, {
 	        key: "check_cell",
 	        value: function check_cell(index) {
 	            console.log("Cell: " + index);
@@ -117,8 +127,7 @@
 	        key: "move_user",
 	        value: function move_user(event) {
 	
-	            //MAY NEED TO PREVENT DEFAULT
-	
+	            console.log("click");
 	
 	            if (event.keyCode === 37) {
 	
@@ -139,11 +148,11 @@
 	                var user_position = this.state.user_position;
 	
 	                //Move the user up
-	                map[user_position - 100] = true;
+	                map[user_position - 50] = true;
 	                map[user_position] = false;
 	
 	                //Set the new map and new user position
-	                this.setState({ map: map, user_position: user_position - 100 });
+	                this.setState({ map: map, user_position: user_position - 50 });
 	            } else if (event.keyCode === 39) {
 	
 	                //Get the map and current user position
@@ -163,42 +172,30 @@
 	                var user_position = this.state.user_position;
 	
 	                //Move the user up
-	                map[user_position + 100] = true;
+	                map[user_position + 50] = true;
 	                map[user_position] = false;
 	
 	                //Set the new map and new user position
-	                this.setState({ map: map, user_position: user_position + 100 });
+	                this.setState({ map: map, user_position: user_position + 50 });
 	            }
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var _this2 = this;
 	
 	            //Get initial variables
 	            var map = this.state.map;
 	            var cells = [];
 	
-	            for (var i = 0; i < 3400; i++) {
+	            for (var i = 0; i < 850; i++) {
 	
 	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, cell_state: map[i], check_cell: this.check_cell }));
 	            }
 	
 	            return _react2.default.createElement(
 	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "text_box" },
-	                    _react2.default.createElement("input", { onKeyDown: function onKeyDown(event) {
-	                            _this2.move_user(event);
-	                        }, type: "text" })
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "map" },
-	                    cells
-	                )
+	                { className: "map" },
+	                cells
 	            );
 	        }
 	    }]);

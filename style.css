@@ -16,8 +16,8 @@ body {
     border-right: solid;
     border-width: 1px;
     float: left;
-    height: 12px;
-    width: 12px;
+    height: 24px;
+    width: 24px;
 }
 
 .user_cell {
@@ -26,6 +26,6 @@ body {
     border-right: solid;
     border-width: 1px;
     float: left;
-    height: 12px;
-    width: 12px;
+    height: 24px;
+    width: 24px;
 }

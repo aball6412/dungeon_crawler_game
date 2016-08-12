@@ -85,16 +85,25 @@
 	
 	        _this.state = {
 	            map: [],
-	            user_position: null
+	            user_position: null,
+	            view_start: 0,
+	            view_end: 850
 	        };
 	
 	        return _this;
 	    } //End constructor
 	
+	    //Once the component mounts for the first time
+	
+	
 	    _createClass(App, [{
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
+	
+	            //Add the event listener
 	            document.addEventListener("keydown", this.move_user.bind(this));
+	
+	            //Run the initial setup function
 	            this.setup();
 	        }
 	    }, {
@@ -104,14 +113,15 @@
 	            //Set up initial map space
 	            var map = [];
 	
-	            for (var i = 1; i <= 8000; i++) {
-	
+	            //Create the cells
+	            for (var i = 1; i <= 3000; i++) {
 	                map.push(false);
 	            }
 	
 	            //TEMPORARILY PUT USER IN MIDDLE OF SCREEN FOR TESTING
 	            map[424] = true;
 	
+	            //Set state
 	            this.setState({ map: map, user_position: 424 });
 	        } //End set up function
 	
@@ -127,9 +137,9 @@
 	        key: "move_user",
 	        value: function move_user(event) {
 	
-	            console.log("click");
-	
 	            if (event.keyCode === 37) {
+	                //Left
+	
 	
 	                //Get the map and current user position
 	                var map = this.state.map;
@@ -142,18 +152,27 @@
 	                //Set the new map and new user position
 	                this.setState({ map: map, user_position: user_position - 1 });
 	            } else if (event.keyCode === 38) {
+	                //Up
 	
 	                //Get the map and current user position
 	                var map = this.state.map;
 	                var user_position = this.state.user_position;
+	                var view_start = this.state.view_start;
+	                var view_end = this.state.view_end;
 	
 	                //Move the user up
 	                map[user_position - 50] = true;
 	                map[user_position] = false;
 	
-	                //Set the new map and new user position
-	                this.setState({ map: map, user_position: user_position - 50 });
+	                if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
+	                    this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50 });
+	                } else {
+	                    //Set the new map and new user position
+	                    this.setState({ map: map, user_position: user_position - 50 });
+	                }
 	            } else if (event.keyCode === 39) {
+	                //Right
+	
 	
 	                //Get the map and current user position
 	                var map = this.state.map;
@@ -166,17 +185,27 @@
 	                //Set the new map and new user position
 	                this.setState({ map: map, user_position: user_position + 1 });
 	            } else if (event.keyCode === 40) {
+	                //Down
 	
-	                //Get the map and current user position
+	                console.log("down");
+	
+	                //Get the map, current user position, and view port
 	                var map = this.state.map;
 	                var user_position = this.state.user_position;
+	                var view_start = this.state.view_start;
+	                var view_end = this.state.view_end;
 	
 	                //Move the user up
 	                map[user_position + 50] = true;
 	                map[user_position] = false;
 	
-	                //Set the new map and new user position
-	                this.setState({ map: map, user_position: user_position + 50 });
+	                //Move the board along if we aren't at the bottom
+	                if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
+	                    this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50 });
+	                } else {
+	                    //Set the new map and new user position
+	                    this.setState({ map: map, user_position: user_position + 50 });
+	                }
 	            }
 	        }
 	    }, {
@@ -185,9 +214,11 @@
 	
 	            //Get initial variables
 	            var map = this.state.map;
+	            var view_start = this.state.view_start;
+	            var view_end = this.state.view_end;
 	            var cells = [];
 	
-	            for (var i = 0; i < 850; i++) {
+	            for (var i = view_start; i < view_end; i++) {
 	
 	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, cell_state: map[i], check_cell: this.check_cell }));
 	            }

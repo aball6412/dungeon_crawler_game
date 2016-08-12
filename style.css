@@ -29,3 +29,13 @@ body {
     height: 24px;
     width: 24px;
 }
+
+.wall {
+    background: #000000;
+    border-top: solid;
+    border-right: solid;
+    border-width: 1px;
+    float: left;
+    height: 24px;
+    width: 24px;
+}

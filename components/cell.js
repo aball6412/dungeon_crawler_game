@@ -12,7 +12,7 @@ var Cell = function(props) {
     
 
     
-    if(cell_state) {
+    if(cell_state === true) {
         
         return (
             <div onClick={ () => { check_cell(index) }} className="user_cell"></div>
@@ -20,6 +20,13 @@ var Cell = function(props) {
         
     }
 
+    else if (cell_state === "wall") {
+        
+        return (
+            <div onClick={ () => { check_cell(index) }} className="wall"></div>
+        );
+        
+    }
     else {
         
         return (

@@ -44,6 +44,35 @@ class App extends React.Component {
         for (var i = 1; i <= 3000; i++) {
             map.push(false);
         }
+        
+        //Make map border: top, left, right, bottom
+        for (var i = 0; i < 50; i++) {
+            map[i] = "wall";
+        }
+        
+        var j = 0;   
+        while(j <= 2950) {
+            map[j] = "wall";
+            j += 50;
+        }
+        
+        j = 49;
+        while(j <= 2999) {
+            map[j] = "wall"
+            j += 50;
+        }
+        
+        for (var i = 2950; i < 3000; i++) {
+            map[i] = "wall";
+        }
+        
+//        for (var i = 0; i <= 2950; (i + 50)) {
+//            map[i] = "dead";
+//        }
+//        
+//        for (var i = 49; i <= 2999; (i + 50)) {
+//            map[i] = "dead";
+//        }
     
         //TEMPORARILY PUT USER IN MIDDLE OF SCREEN FOR TESTING
         map[424] = true;

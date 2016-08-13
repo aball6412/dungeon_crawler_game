@@ -98,7 +98,8 @@
 	            weapon_number: 0,
 	            attack: 5,
 	            rank: 1,
-	            enemies_left: 10
+	            enemies_left: 10,
+	            enemies_health: null
 	        };
 	
 	        return _this;
@@ -197,10 +198,10 @@
 	
 	
 	            //Pick 3 random path cells for weapons
-	            var weapon_numer = 3;
+	            var weapon_number = 3;
 	
 	            var count = 0;
-	            while (count < weapon_numer) {
+	            while (count < weapon_number) {
 	                //Get random number between 0 and Map length
 	                var random = Math.floor(Math.random() * _maps2.default.length + 0);
 	
@@ -288,12 +289,19 @@
 	                        weapon_number++;
 	                    }
 	
-	                    //Move the user to the left
-	                    map[user_position - 1] = true;
-	                    map[user_position] = "path";
+	                    if (map[user_position - 1] === "enemy") {
+	                        var battle_result = this.battle();
+	                    }
 	
-	                    //Set the new map and new user position
-	                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
+	                    if (battle_result === undefined || battle_result === true) {
+	
+	                        //Move the user to the left
+	                        map[user_position - 1] = true;
+	                        map[user_position] = "path";
+	
+	                        //Set the new map and new user position
+	                        this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
+	                    }
 	                }
 	            } else if (event.keyCode === 38) {
 	                //Up Arrow
@@ -319,16 +327,24 @@
 	                        weapon_number++;
 	                    }
 	
-	                    //Move the user up
-	                    map[user_position - 50] = true;
-	                    map[user_position] = "path";
-	
-	                    if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
-	                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
-	                    } else {
-	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
+	                    if (map[user_position - 50] === "enemy") {
+	                        var battle_result = this.battle();
 	                    }
+	
+	                    if (battle_result === undefined || battle_result === true) {
+	
+	                        //Move the user up
+	                        map[user_position - 50] = true;
+	                        map[user_position] = "path";
+	
+	                        if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
+	                            this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
+	                        } else {
+	                            //Set the new map and new user position
+	                            this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
+	                        }
+	                    } //End if battle result statement
+	
 	                } //End big if statement
 	
 	            } else if (event.keyCode === 39) {
@@ -353,12 +369,19 @@
 	                        weapon_number++;
 	                    }
 	
-	                    //Move the user up
-	                    map[user_position + 1] = true;
-	                    map[user_position] = "path";
+	                    if (map[user_position + 1] === "enemy") {
+	                        var battle_result = this.battle();
+	                    }
 	
-	                    //Set the new map and new user position
-	                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
+	                    if (battle_result === undefined || battle_result === true) {
+	
+	                        //Move the user up
+	                        map[user_position + 1] = true;
+	                        map[user_position] = "path";
+	
+	                        //Set the new map and new user position
+	                        this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
+	                    }
 	                }
 	            } else if (event.keyCode === 40) {
 	                //Down Arrow
@@ -384,21 +407,38 @@
 	                        weapon_number++;
 	                    }
 	
-	                    //Move the user up
-	                    map[user_position + 50] = true;
-	                    map[user_position] = "path";
-	
-	                    //Move the board along if we aren't at the bottom
-	                    if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
-	                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
-	                    } else {
-	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
+	                    if (map[user_position + 50] === "enemy") {
+	                        var battle_result = this.battle();
 	                    }
+	
+	                    if (battle_result === undefined || battle_result === true) {
+	
+	                        //Move the user up
+	                        map[user_position + 50] = true;
+	                        map[user_position] = "path";
+	
+	                        //Move the board along if we aren't at the bottom
+	                        if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
+	                            this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
+	                        } else {
+	                            //Set the new map and new user position
+	                            this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
+	                        }
+	                    } //End if battle result statement
+	
 	                } //End big if statement
 	            } //End else if statement
 	
 	        } //End move user function
+	
+	
+	    }, {
+	        key: "battle",
+	        value: function battle() {
+	
+	            console.log("Start battle");
+	            return false;
+	        } //End battle function
 	
 	
 	    }, {
@@ -410,12 +450,6 @@
 	            var view_start = this.state.view_start;
 	            var view_end = this.state.view_end;
 	            var cells = [];
-	
-	            //        //Get game variables
-	            //        var weapon_list = this.state.weapon;
-	            //        var weapon_number = this.state.weapon_number
-	            //        var weapon = weapon_list[weapon_number];
-	
 	
 	            for (var i = view_start; i < view_end; i++) {
 	

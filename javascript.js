@@ -27,7 +27,8 @@ class App extends React.Component {
             weapon_number: 0,
             attack: 5,
             rank: 1,
-            enemies_left: 10
+            enemies_left: 10,
+            enemies_health: null
         }
         
         
@@ -128,10 +129,10 @@ class App extends React.Component {
         
         
         //Pick 3 random path cells for weapons
-        var weapon_numer = 3;
+        var weapon_number = 3;
         
         var count = 0;
-        while (count < weapon_numer) {
+        while (count < weapon_number) {
             //Get random number between 0 and Map length
             var random = Math.floor((Math.random() * Map.length) + 0);
             
@@ -229,12 +230,21 @@ class App extends React.Component {
                     weapon_number++;
                 }
                 
-                //Move the user to the left
-                map[user_position - 1] = true;
-                map[user_position] = "path";
+                if (map[user_position - 1] === "enemy") {
+                    var battle_result = this.battle();
+                }
                 
-                //Set the new map and new user position
-                this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
+                if (battle_result === undefined || battle_result === true) {
+                    
+                    //Move the user to the left
+                    map[user_position - 1] = true;
+                    map[user_position] = "path";
+
+                    //Set the new map and new user position
+                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
+                    
+                }
+                
                 
             }
             
@@ -267,18 +277,29 @@ class App extends React.Component {
                     weapon_number++;
                 }
                 
-                //Move the user up
-                map[user_position - 50] = true;
-                map[user_position] = "path";
-                
-                if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
-                    this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
+                if (map[user_position - 50] === "enemy") {
+                    var battle_result = this.battle();
                 }
                 
-                else {
-                    //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
-                }
+                
+                if (battle_result === undefined || battle_result === true) {
+                    
+                    //Move the user up
+                    map[user_position - 50] = true;
+                    map[user_position] = "path";
+
+                    if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
+                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
+                    }
+
+                    else {
+                        //Set the new map and new user position
+                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
+                    }
+                    
+                    
+                } //End if battle result statement
+                
                 
                 
             } //End big if statement
@@ -312,12 +333,22 @@ class App extends React.Component {
                     weapon_number++;
                 }
                 
-                //Move the user up
-                map[user_position + 1] = true;
-                map[user_position] = "path";
+                if (map[user_position + 1] === "enemy") {
+                    var battle_result = this.battle();
+                }
                 
-                //Set the new map and new user position
-                this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
+                if (battle_result === undefined || battle_result === true) {
+                    
+                    //Move the user up
+                    map[user_position + 1] = true;
+                    map[user_position] = "path";
+
+                    //Set the new map and new user position
+                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
+                    
+                }
+                
+
                 
             }
 
@@ -350,19 +381,28 @@ class App extends React.Component {
                     weapon_number++;
                 }
                 
-                //Move the user up
-                map[user_position + 50] = true;
-                map[user_position] = "path";
-                
-                //Move the board along if we aren't at the bottom
-                if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
-                    this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
+                if (map[user_position + 50] === "enemy") {
+                    var battle_result = this.battle();
                 }
                 
-                else{
-                    //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
-                }
+                
+                if (battle_result === undefined || battle_result === true) {
+                    
+                    //Move the user up
+                    map[user_position + 50] = true;
+                    map[user_position] = "path";
+
+                    //Move the board along if we aren't at the bottom
+                    if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
+                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
+                    }
+
+                    else{
+                        //Set the new map and new user position
+                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
+                    }
+  
+                } //End if battle result statement
                 
                 
             } //End big if statement
@@ -375,7 +415,13 @@ class App extends React.Component {
     } //End move user function
     
     
-    
+  
+    battle() {
+        
+        console.log("Start battle");
+        return false;
+        
+    } //End battle function
     
     
     
@@ -387,11 +433,6 @@ class App extends React.Component {
         var view_start = this.state.view_start;
         var view_end = this.state.view_end;
         var cells = [];
-        
-//        //Get game variables
-//        var weapon_list = this.state.weapon;
-//        var weapon_number = this.state.weapon_number
-//        var weapon = weapon_list[weapon_number];
         
         
         

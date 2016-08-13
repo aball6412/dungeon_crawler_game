@@ -21,7 +21,13 @@ class App extends React.Component {
             user_position: null,
             view_start: 0,
             view_end: 850,
-            make_map: []
+            make_map: [],
+            health: 50,
+            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
+            weapon_number: 0,
+            attack: 5,
+            rank: 1,
+            enemies_left: 10
         }
         
         
@@ -94,7 +100,32 @@ class App extends React.Component {
         } //End while loop
         
         
-        //Pick random path cells for health
+        //Pick 5 random path cells for health
+        var health_number = 5;
+        
+        var count = 0;
+        while (count < health_number) {
+            //Get random number between 0 and Map length
+            var random = Math.floor((Math.random() * Map.length) + 0);
+            
+            //Use random number to place an enemy at that index
+            var health_location = Map[random];
+            
+            //Make sure space isn't taken by something else before placing
+            if (map[health_location] === "path") {
+                map[health_location] = "health";
+            }
+            
+            count = 0;
+            for (var i = 0; i < map.length; i++) {
+                if (map[i] === "health") {
+                    count++;
+                }
+            }
+            
+        } //End while loop
+        
+        
         
         //Pick 3 random path cells for weapons
         var weapon_numer = 3;
@@ -124,7 +155,7 @@ class App extends React.Component {
         
   
         //Set state
-        this.setState({ map: map, user_position: user_position })
+        this.setState({ map: map, user_position: user_position });
         
     } //End set up function
     
@@ -183,15 +214,27 @@ class App extends React.Component {
             var map = this.state.map;
             var user_position = this.state.user_position;
             
+            //Get game variables that we might need
+            var health = this.state.health;
+            var weapon_number = this.state.weapon_number;
             
-            if (map[user_position -1] != "wall") {
+            if (map[user_position - 1] != "wall") {
+                
+
+                if (map[user_position - 1] === "health") {
+                    health += 10;
+                }
+                
+                if (map[user_position - 1] === "weapon") {
+                    weapon_number++;
+                }
                 
                 //Move the user to the left
                 map[user_position - 1] = true;
                 map[user_position] = "path";
                 
                 //Set the new map and new user position
-                this.setState({ map: map, user_position: user_position - 1 });
+                this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
                 
             }
             
@@ -208,21 +251,33 @@ class App extends React.Component {
             var view_start = this.state.view_start;
             var view_end = this.state.view_end;
             
+            //Get game variables that we might need
+            var health = this.state.health;
+            var weapon_number = this.state.weapon_number;
+            
             
             //If moving up is not a wall
             if (map[user_position - 50] != "wall") {
+                
+                if (map[user_position - 50] === "health") {
+                    health += 10;
+                }
+                
+                if (map[user_position - 50] === "weapon") {
+                    weapon_number++;
+                }
                 
                 //Move the user up
                 map[user_position - 50] = true;
                 map[user_position] = "path";
                 
                 if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
-                    this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50 });
+                    this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
                 }
                 
                 else {
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position - 50 });
+                    this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
                 }
                 
                 
@@ -242,15 +297,27 @@ class App extends React.Component {
             var map = this.state.map;
             var user_position = this.state.user_position;
             
+            //Get game variables that we might need
+            var health = this.state.health;
+            var weapon_number = this.state.weapon_number;
+            
               
             if (map[user_position + 1] != "wall") {
+                
+                if (map[user_position + 1] === "health") {
+                    health += 10;
+                }
+                
+                if (map[user_position + 1] === "weapon") {
+                    weapon_number++;
+                }
                 
                 //Move the user up
                 map[user_position + 1] = true;
                 map[user_position] = "path";
                 
                 //Set the new map and new user position
-                this.setState({ map: map, user_position: user_position + 1 });
+                this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
                 
             }
 
@@ -268,8 +335,20 @@ class App extends React.Component {
             var view_start = this.state.view_start;
             var view_end = this.state.view_end;
             
+            //Get game variables that we might need
+            var health = this.state.health;
+            var weapon_number = this.state.weapon_number;
+            
 
             if (map[user_position + 50] != "wall") {
+                
+                if (map[user_position + 50] === "health") {
+                    health += 10;
+                }
+                
+                if (map[user_position + 50] === "weapon") {
+                    weapon_number++;
+                }
                 
                 //Move the user up
                 map[user_position + 50] = true;
@@ -277,12 +356,12 @@ class App extends React.Component {
                 
                 //Move the board along if we aren't at the bottom
                 if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
-                    this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50 });
+                    this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
                 }
                 
                 else{
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position + 50 });
+                    this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
                 }
                 
                 
@@ -309,6 +388,13 @@ class App extends React.Component {
         var view_end = this.state.view_end;
         var cells = [];
         
+//        //Get game variables
+//        var weapon_list = this.state.weapon;
+//        var weapon_number = this.state.weapon_number
+//        var weapon = weapon_list[weapon_number];
+        
+        
+        
         for (var i = view_start; i < view_end; i++) {
             
             cells.push(<Cell key={ i } count={ i } cell_state={ map[i] } check_cell={ this.check_cell.bind(this) } />);
@@ -317,9 +403,48 @@ class App extends React.Component {
         
         return (
         
+                <div>
+                 
+                 
+                    <div className="stats">
+                 
+                 
+                        <div className="stat_item">
+                            <h4>Health: { this.state.health }</h4>
+                        </div>
+                 
+                 
+                        <div className="stat_item">
+                            <h4>Weapon: { this.state.weapon[this.state.weapon_number] }</h4>
+                        </div>
+                 
+                        
+                        <div className="stat_item">
+                            <h4>Attack: { this.state.attack }</h4>
+                        </div>
+                 
+                        
+                        <div className="stat_item">
+                            <h4>Rank: { this.state.rank }</h4>
+                        </div>
+                 
+                    
+                        <div className="stat_item">
+                            <h4>Enemies Remaining: { this.state.enemies_left }</h4>
+                        </div>
+                 
+                 
+                     </div>
 
-                <div className="map">
-                    { cells }
+                 
+                 
+                    <div className="map">
+                        { cells }
+                    </div>
+                 
+                 
+                 
+                 
                 </div>
 
         

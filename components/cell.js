@@ -49,6 +49,13 @@ var Cell = function(props) {
         );
     }
     
+    else if (cell_state === "health") {
+        
+        return (
+            <div onClick={ () => { check_cell(index) }} className="health"></div>
+        );
+    }
+    
     else {
         
         return (

@@ -3,9 +3,27 @@ body {
 
 }
 
+.stats {
+    border: solid;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50px;
+    width: 1202px;
+}
+
+.stat_item {
+
+    float: left;
+    margin-left: 25px;
+
+}
+
 .map {
     border: solid;
+    border-color: green;
     border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
     width: 1202px;
     height: 410px;
 }
@@ -62,6 +80,16 @@ body {
 
 .weapon {
     background: gold;
+    border-top: solid;
+    border-right: solid;
+    border-width: 1px;
+    float: left;
+    height: 24px;
+    width: 24px;
+}
+
+.health {
+    background: white;
     border-top: solid;
     border-right: solid;
     border-width: 1px;

@@ -92,7 +92,13 @@
 	            user_position: null,
 	            view_start: 0,
 	            view_end: 850,
-	            make_map: []
+	            make_map: [],
+	            health: 50,
+	            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
+	            weapon_number: 0,
+	            attack: 5,
+	            rank: 1,
+	            enemies_left: 10
 	        };
 	
 	        return _this;
@@ -165,7 +171,30 @@
 	            } //End while loop
 	
 	
-	            //Pick random path cells for health
+	            //Pick 5 random path cells for health
+	            var health_number = 5;
+	
+	            var count = 0;
+	            while (count < health_number) {
+	                //Get random number between 0 and Map length
+	                var random = Math.floor(Math.random() * _maps2.default.length + 0);
+	
+	                //Use random number to place an enemy at that index
+	                var health_location = _maps2.default[random];
+	
+	                //Make sure space isn't taken by something else before placing
+	                if (map[health_location] === "path") {
+	                    map[health_location] = "health";
+	                }
+	
+	                count = 0;
+	                for (var i = 0; i < map.length; i++) {
+	                    if (map[i] === "health") {
+	                        count++;
+	                    }
+	                }
+	            } //End while loop
+	
 	
 	            //Pick 3 random path cells for weapons
 	            var weapon_numer = 3;
@@ -245,14 +274,26 @@
 	                var map = this.state.map;
 	                var user_position = this.state.user_position;
 	
+	                //Get game variables that we might need
+	                var health = this.state.health;
+	                var weapon_number = this.state.weapon_number;
+	
 	                if (map[user_position - 1] != "wall") {
+	
+	                    if (map[user_position - 1] === "health") {
+	                        health += 10;
+	                    }
+	
+	                    if (map[user_position - 1] === "weapon") {
+	                        weapon_number++;
+	                    }
 	
 	                    //Move the user to the left
 	                    map[user_position - 1] = true;
 	                    map[user_position] = "path";
 	
 	                    //Set the new map and new user position
-	                    this.setState({ map: map, user_position: user_position - 1 });
+	                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
 	                }
 	            } else if (event.keyCode === 38) {
 	                //Up Arrow
@@ -263,18 +304,30 @@
 	                var view_start = this.state.view_start;
 	                var view_end = this.state.view_end;
 	
+	                //Get game variables that we might need
+	                var health = this.state.health;
+	                var weapon_number = this.state.weapon_number;
+	
 	                //If moving up is not a wall
 	                if (map[user_position - 50] != "wall") {
+	
+	                    if (map[user_position - 50] === "health") {
+	                        health += 10;
+	                    }
+	
+	                    if (map[user_position - 50] === "weapon") {
+	                        weapon_number++;
+	                    }
 	
 	                    //Move the user up
 	                    map[user_position - 50] = true;
 	                    map[user_position] = "path";
 	
 	                    if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
-	                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50 });
+	                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
 	                    } else {
 	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position - 50 });
+	                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
 	                    }
 	                } //End big if statement
 	
@@ -286,14 +339,26 @@
 	                var map = this.state.map;
 	                var user_position = this.state.user_position;
 	
+	                //Get game variables that we might need
+	                var health = this.state.health;
+	                var weapon_number = this.state.weapon_number;
+	
 	                if (map[user_position + 1] != "wall") {
+	
+	                    if (map[user_position + 1] === "health") {
+	                        health += 10;
+	                    }
+	
+	                    if (map[user_position + 1] === "weapon") {
+	                        weapon_number++;
+	                    }
 	
 	                    //Move the user up
 	                    map[user_position + 1] = true;
 	                    map[user_position] = "path";
 	
 	                    //Set the new map and new user position
-	                    this.setState({ map: map, user_position: user_position + 1 });
+	                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
 	                }
 	            } else if (event.keyCode === 40) {
 	                //Down Arrow
@@ -305,7 +370,19 @@
 	                var view_start = this.state.view_start;
 	                var view_end = this.state.view_end;
 	
+	                //Get game variables that we might need
+	                var health = this.state.health;
+	                var weapon_number = this.state.weapon_number;
+	
 	                if (map[user_position + 50] != "wall") {
+	
+	                    if (map[user_position + 50] === "health") {
+	                        health += 10;
+	                    }
+	
+	                    if (map[user_position + 50] === "weapon") {
+	                        weapon_number++;
+	                    }
 	
 	                    //Move the user up
 	                    map[user_position + 50] = true;
@@ -313,10 +390,10 @@
 	
 	                    //Move the board along if we aren't at the bottom
 	                    if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
-	                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50 });
+	                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
 	                    } else {
 	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position + 50 });
+	                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
 	                    }
 	                } //End big if statement
 	            } //End else if statement
@@ -334,6 +411,12 @@
 	            var view_end = this.state.view_end;
 	            var cells = [];
 	
+	            //        //Get game variables
+	            //        var weapon_list = this.state.weapon;
+	            //        var weapon_number = this.state.weapon_number
+	            //        var weapon = weapon_list[weapon_number];
+	
+	
 	            for (var i = view_start; i < view_end; i++) {
 	
 	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, cell_state: map[i], check_cell: this.check_cell.bind(this) }));
@@ -341,8 +424,66 @@
 	
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "map" },
-	                cells
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "stats" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "stat_item" },
+	                        _react2.default.createElement(
+	                            "h4",
+	                            null,
+	                            "Health: ",
+	                            this.state.health
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "stat_item" },
+	                        _react2.default.createElement(
+	                            "h4",
+	                            null,
+	                            "Weapon: ",
+	                            this.state.weapon[this.state.weapon_number]
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "stat_item" },
+	                        _react2.default.createElement(
+	                            "h4",
+	                            null,
+	                            "Attack: ",
+	                            this.state.attack
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "stat_item" },
+	                        _react2.default.createElement(
+	                            "h4",
+	                            null,
+	                            "Rank: ",
+	                            this.state.rank
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "stat_item" },
+	                        _react2.default.createElement(
+	                            "h4",
+	                            null,
+	                            "Enemies Remaining: ",
+	                            this.state.enemies_left
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "map" },
+	                    cells
+	                )
 	            );
 	        }
 	    }]);
@@ -22368,6 +22509,11 @@
 	        return _react2.default.createElement("div", { onClick: function onClick() {
 	                check_cell(index);
 	            }, className: "weapon" });
+	    } else if (cell_state === "health") {
+	
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                check_cell(index);
+	            }, className: "health" });
 	    } else {
 	
 	        return _react2.default.createElement("div", { onClick: function onClick() {

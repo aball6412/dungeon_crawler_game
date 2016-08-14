@@ -98,6 +98,7 @@
 	            weapon_number: 0,
 	            attack: 20,
 	            rank: 1,
+	            xp: 0,
 	            enemies_left: 10,
 	            enemies_health: {}
 	        };
@@ -286,6 +287,8 @@
 	                var weapon_number = this.state.weapon_number;
 	                var attack = this.state.attack;
 	                var enemies_left = this.state.enemies_left;
+	                var xp = this.state.xp;
+	                var rank = this.state.rank;
 	
 	                if (map[user_position - 1] != "wall") {
 	
@@ -312,13 +315,19 @@
 	                        map[user_position - 1] = true;
 	                        map[user_position] = "path";
 	
-	                        //Reduce enemies left by one if enemy vanquished
+	                        //Reduce enemies left by one if enemy vanquished and give XP points
 	                        if (battle_result === true) {
 	                            enemies_left--;
+	                            xp += 20;
+	                            //If user levels up then reset xp and increase rank
+	                            if (xp === 100) {
+	                                rank++;
+	                                xp = 0;
+	                            }
 	                        }
 	
 	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
+	                        this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
 	                    }
 	                }
 	            } else if (event.keyCode === 38) {
@@ -335,6 +344,8 @@
 	                var weapon_number = this.state.weapon_number;
 	                var attack = this.state.attack;
 	                var enemies_left = this.state.enemies_left;
+	                var xp = this.state.xp;
+	                var rank = this.state.rank;
 	
 	                //If moving up is not a wall
 	                if (map[user_position - 50] != "wall") {
@@ -365,13 +376,19 @@
 	                        //Reduce enemies left by one if enemy vanquished
 	                        if (battle_result === true) {
 	                            enemies_left--;
+	                            xp += 20;
+	                            //If user levels up then reset xp and increase rank
+	                            if (xp === 100) {
+	                                rank++;
+	                                xp = 0;
+	                            }
 	                        }
 	
 	                        if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
-	                            this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
+	                            this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
 	                        } else {
 	                            //Set the new map and new user position
-	                            this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
+	                            this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
 	                        }
 	                    } //End if battle result statement
 	
@@ -390,6 +407,8 @@
 	                var weapon_number = this.state.weapon_number;
 	                var attack = this.state.attack;
 	                var enemies_left = this.state.enemies_left;
+	                var xp = this.state.xp;
+	                var rank = this.state.rank;
 	
 	                if (map[user_position + 1] != "wall") {
 	
@@ -419,10 +438,16 @@
 	                        //Reduce enemies left by one if enemy vanquished
 	                        if (battle_result === true) {
 	                            enemies_left--;
+	                            xp += 20;
+	                            //If user levels up then reset xp and increase rank
+	                            if (xp === 100) {
+	                                rank++;
+	                                xp = 0;
+	                            }
 	                        }
 	
 	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
+	                        this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
 	                    }
 	                }
 	            } else if (event.keyCode === 40) {
@@ -440,6 +465,8 @@
 	                var weapon_number = this.state.weapon_number;
 	                var attack = this.state.attack;
 	                var enemies_left = this.state.enemies_left;
+	                var xp = this.state.xp;
+	                var rank = this.state.rank;
 	
 	                if (map[user_position + 50] != "wall") {
 	
@@ -469,14 +496,20 @@
 	                        //Reduce enemies left by one if enemy vanquished
 	                        if (battle_result === true) {
 	                            enemies_left--;
+	                            xp += 20;
+	                            //If user levels up then reset xp and increase rank
+	                            if (xp === 100) {
+	                                rank++;
+	                                xp = 0;
+	                            }
 	                        }
 	
 	                        //Move the board along if we aren't at the bottom
 	                        if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
-	                            this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
+	                            this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
 	                        } else {
 	                            //Set the new map and new user position
-	                            this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
+	                            this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
 	                        }
 	                    } //End if battle result statement
 	
@@ -494,7 +527,7 @@
 	            var battle_damage = function battle_damage(attack) {
 	
 	                //Get enemy attack impact
-	                var random = Math.floor(Math.random() * 5 + 1);
+	                var random = Math.floor(Math.random() * 3 + 1);
 	                var base_damage = 10;
 	                var total_damage = base_damage * random;
 	
@@ -516,7 +549,8 @@
 	            var enemies_health = this.state.enemies_health;
 	            var my_enemy = enemy_index;
 	            var user_health = this.state.health;
-	            var attack = this.state.attack;
+	            //Attack is equal to attack * rank of the user
+	            var attack = this.state.attack * this.state.rank;
 	
 	            //Run the battle simulation
 	            var battle_damage = battle_damage(attack);
@@ -597,6 +631,16 @@
 	                            null,
 	                            "Rank: ",
 	                            this.state.rank
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "stat_item" },
+	                        _react2.default.createElement(
+	                            "h4",
+	                            null,
+	                            "XP: ",
+	                            this.state.xp
 	                        )
 	                    ),
 	                    _react2.default.createElement(

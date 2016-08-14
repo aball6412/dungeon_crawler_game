@@ -29,7 +29,7 @@ class App extends React.Component {
             rank: 1,
             xp: 0,
             enemies_left: 10,
-            enemies_health: {}
+            enemies_health: {},
         }
         
         
@@ -266,6 +266,24 @@ class App extends React.Component {
                             xp = 0;
                             health += 100;
                         }
+                        //Once all enemies are defeated add a boss
+                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+                            enemies_left = "Find the Boss!!";
+                            //Add the boss to the map
+                            map[2154] = "enemy";
+                            map[2204] = "enemy";
+                            map[2205] = "enemy";
+                            map[2155] = "enemy";
+                            
+                            //Set enemies initial health
+                            var enemies_health = this.state.enemies_health;
+                            var initial_health = 50;
+                            enemies_health[2154] = initial_health;
+                            enemies_health[2204] = initial_health;
+                            enemies_health[2205] = initial_health;
+                            enemies_health[2155] = initial_health;
+
+                        }
                         
                     }
                     
@@ -336,6 +354,23 @@ class App extends React.Component {
                             rank++;
                             xp = 0;
                             health += 100;
+                        }
+                        //Once all enemies are defeated add a boss
+                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+                            enemies_left = "Find the Boss!!";
+                            //Add the boss to the map
+                            map[2154] = "enemy";
+                            map[2204] = "enemy";
+                            map[2205] = "enemy";
+                            map[2155] = "enemy";
+                            
+                            //Set enemies initial health
+                            var enemies_health = this.state.enemies_health;
+                            var initial_health = 50;
+                            enemies_health[2154] = initial_health;
+                            enemies_health[2204] = initial_health;
+                            enemies_health[2205] = initial_health;
+                            enemies_health[2155] = initial_health;
                         }
                     }
 
@@ -413,6 +448,24 @@ class App extends React.Component {
                             xp = 0;
                             health += 100;
                         }
+                        //Once all enemies are defeated add a boss
+                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+                            enemies_left = "Find the Boss!!";
+                            //Add the boss to the map
+                            map[2154] = "enemy";
+                            map[2204] = "enemy";
+                            map[2205] = "enemy";
+                            map[2155] = "enemy";
+                            
+                            //Set enemies initial health
+                            var enemies_health = this.state.enemies_health;
+                            var initial_health = 50;
+                            enemies_health[2154] = initial_health;
+                            enemies_health[2204] = initial_health;
+                            enemies_health[2205] = initial_health;
+                            enemies_health[2155] = initial_health;
+                        }
+                      
                     }
 
                     //Set the new map and new user position
@@ -483,6 +536,24 @@ class App extends React.Component {
                             xp = 0;
                             health += 100;
                         }
+                        //Once all enemies are defeated add a boss
+                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+                            enemies_left = "Find the Boss!!";
+                            //Add the boss to the map
+                            map[2154] = "enemy";
+                            map[2204] = "enemy";
+                            map[2205] = "enemy";
+                            map[2155] = "enemy";
+                            
+                            //Set enemies initial health
+                            var enemies_health = this.state.enemies_health;
+                            var initial_health = 50;
+                            enemies_health[2154] = initial_health;
+                            enemies_health[2204] = initial_health;
+                            enemies_health[2205] = initial_health;
+                            enemies_health[2155] = initial_health;
+                        }
+                        
                     }
 
                     //Move the board along if we aren't at the bottom

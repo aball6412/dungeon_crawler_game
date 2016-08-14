@@ -317,13 +317,30 @@
 	
 	                        //Reduce enemies left by one if enemy vanquished and give XP points
 	                        if (battle_result === true) {
-	                            enemies_left--;
+	                            enemies_left -= 1;
 	                            xp += 20;
 	                            //If user levels up then reset xp and increase rank
 	                            if (xp === 100) {
 	                                rank++;
 	                                xp = 0;
 	                                health += 100;
+	                            }
+	                            //Once all enemies are defeated add a boss
+	                            if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+	                                enemies_left = "Find the Boss!!";
+	                                //Add the boss to the map
+	                                map[2154] = "enemy";
+	                                map[2204] = "enemy";
+	                                map[2205] = "enemy";
+	                                map[2155] = "enemy";
+	
+	                                //Set enemies initial health
+	                                var enemies_health = this.state.enemies_health;
+	                                var initial_health = 50;
+	                                enemies_health[2154] = initial_health;
+	                                enemies_health[2204] = initial_health;
+	                                enemies_health[2205] = initial_health;
+	                                enemies_health[2155] = initial_health;
 	                            }
 	                        }
 	
@@ -383,6 +400,23 @@
 	                                rank++;
 	                                xp = 0;
 	                                health += 100;
+	                            }
+	                            //Once all enemies are defeated add a boss
+	                            if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+	                                enemies_left = "Find the Boss!!";
+	                                //Add the boss to the map
+	                                map[2154] = "enemy";
+	                                map[2204] = "enemy";
+	                                map[2205] = "enemy";
+	                                map[2155] = "enemy";
+	
+	                                //Set enemies initial health
+	                                var enemies_health = this.state.enemies_health;
+	                                var initial_health = 50;
+	                                enemies_health[2154] = initial_health;
+	                                enemies_health[2204] = initial_health;
+	                                enemies_health[2205] = initial_health;
+	                                enemies_health[2155] = initial_health;
 	                            }
 	                        }
 	
@@ -447,6 +481,23 @@
 	                                xp = 0;
 	                                health += 100;
 	                            }
+	                            //Once all enemies are defeated add a boss
+	                            if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+	                                enemies_left = "Find the Boss!!";
+	                                //Add the boss to the map
+	                                map[2154] = "enemy";
+	                                map[2204] = "enemy";
+	                                map[2205] = "enemy";
+	                                map[2155] = "enemy";
+	
+	                                //Set enemies initial health
+	                                var enemies_health = this.state.enemies_health;
+	                                var initial_health = 50;
+	                                enemies_health[2154] = initial_health;
+	                                enemies_health[2204] = initial_health;
+	                                enemies_health[2205] = initial_health;
+	                                enemies_health[2155] = initial_health;
+	                            }
 	                        }
 	
 	                        //Set the new map and new user position
@@ -505,6 +556,23 @@
 	                                rank++;
 	                                xp = 0;
 	                                health += 100;
+	                            }
+	                            //Once all enemies are defeated add a boss
+	                            if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
+	                                enemies_left = "Find the Boss!!";
+	                                //Add the boss to the map
+	                                map[2154] = "enemy";
+	                                map[2204] = "enemy";
+	                                map[2205] = "enemy";
+	                                map[2155] = "enemy";
+	
+	                                //Set enemies initial health
+	                                var enemies_health = this.state.enemies_health;
+	                                var initial_health = 50;
+	                                enemies_health[2154] = initial_health;
+	                                enemies_health[2204] = initial_health;
+	                                enemies_health[2205] = initial_health;
+	                                enemies_health[2155] = initial_health;
 	                            }
 	                        }
 	

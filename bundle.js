@@ -93,7 +93,7 @@
 	            view_start: 0,
 	            view_end: 850,
 	            make_map: [],
-	            health: 200,
+	            health: 100,
 	            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
 	            weapon_number: 0,
 	            attack: 20,
@@ -323,6 +323,7 @@
 	                            if (xp === 100) {
 	                                rank++;
 	                                xp = 0;
+	                                health += 100;
 	                            }
 	                        }
 	
@@ -381,6 +382,7 @@
 	                            if (xp === 100) {
 	                                rank++;
 	                                xp = 0;
+	                                health += 100;
 	                            }
 	                        }
 	
@@ -443,6 +445,7 @@
 	                            if (xp === 100) {
 	                                rank++;
 	                                xp = 0;
+	                                health += 100;
 	                            }
 	                        }
 	
@@ -501,6 +504,7 @@
 	                            if (xp === 100) {
 	                                rank++;
 	                                xp = 0;
+	                                health += 100;
 	                            }
 	                        }
 	

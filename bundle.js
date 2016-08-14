@@ -99,7 +99,7 @@
 	            attack: 5,
 	            rank: 1,
 	            enemies_left: 10,
-	            enemies_health: null
+	            enemies_health: {}
 	        };
 	
 	        return _this;
@@ -161,6 +161,12 @@
 	                //Make sure space isn't taken by something else before placing
 	                if (map[enemy_location] === "path") {
 	                    map[enemy_location] = "enemy";
+	
+	                    //Set enemies initial health
+	                    var enemies_health = this.state.enemies_health;
+	                    var initial_health = 20;
+	                    var key = enemy_location;
+	                    enemies_health[key] = initial_health;
 	                }
 	
 	                count = 0;
@@ -223,7 +229,7 @@
 	
 	
 	            //Set state
-	            this.setState({ map: map, user_position: user_position });
+	            this.setState({ map: map, user_position: user_position, enemies_health: enemies_health });
 	        } //End set up function
 	
 	
@@ -290,7 +296,11 @@
 	                    }
 	
 	                    if (map[user_position - 1] === "enemy") {
-	                        var battle_result = this.battle();
+	                        var enemy_index = user_position - 1;
+	                        var battle_result = this.battle(enemy_index);
+	
+	                        //Need to get health variable from state again due to any changes from battle result function
+	                        health = this.state.health;
 	                    }
 	
 	                    if (battle_result === undefined || battle_result === true) {
@@ -328,7 +338,11 @@
 	                    }
 	
 	                    if (map[user_position - 50] === "enemy") {
-	                        var battle_result = this.battle();
+	                        var enemy_index = user_position - 50;
+	                        var battle_result = this.battle(enemy_index);
+	
+	                        //Need to get health variable from state again due to any changes from battle result function
+	                        health = this.state.health;
 	                    }
 	
 	                    if (battle_result === undefined || battle_result === true) {
@@ -370,7 +384,11 @@
 	                    }
 	
 	                    if (map[user_position + 1] === "enemy") {
-	                        var battle_result = this.battle();
+	                        var enemy_index = user_position + 1;
+	                        var battle_result = this.battle(enemy_index);
+	
+	                        //Need to get health variable from state again due to any changes from battle result function
+	                        health = this.state.health;
 	                    }
 	
 	                    if (battle_result === undefined || battle_result === true) {
@@ -408,7 +426,11 @@
 	                    }
 	
 	                    if (map[user_position + 50] === "enemy") {
-	                        var battle_result = this.battle();
+	                        var enemy_index = user_position + 50;
+	                        var battle_result = this.battle(enemy_index);
+	
+	                        //Need to get health variable from state again due to any changes from battle result function
+	                        health = this.state.health;
 	                    }
 	
 	                    if (battle_result === undefined || battle_result === true) {
@@ -434,10 +456,53 @@
 	
 	    }, {
 	        key: "battle",
-	        value: function battle() {
+	        value: function battle(enemy_index) {
 	
-	            console.log("Start battle");
-	            return false;
+	            //Set up random battle damange function
+	            var battle_damage = function battle_damage(attack) {
+	
+	                //Get enemy attack impact
+	                var random = Math.floor(Math.random() * 5 + 1);
+	                var base_damage = 10;
+	                var total_damage = base_damage * random;
+	
+	                //Get user attack impact
+	                var user_random = Math.floor(Math.random() * 3 + 1);
+	                var user_base_damage = attack;
+	                var user_total_damage = user_base_damage * user_random;
+	
+	                var obj = {
+	                    user_attack: user_total_damage,
+	                    enemy_attack: total_damage
+	                };
+	
+	                return obj;
+	            }; //End battle damage function
+	
+	
+	            //Get specific enemy and get user attack strength
+	            var enemies_health = this.state.enemies_health;
+	            var my_enemy = enemy_index;
+	            var user_health = this.state.health;
+	            var attack = this.state.attack;
+	
+	            //Run the battle simulation
+	            var battle_damage = battle_damage(attack);
+	
+	            //Set new enemy and user health after battle
+	            enemies_health[my_enemy] = enemies_health[my_enemy] - battle_damage.user_attack;
+	            user_health = user_health - battle_damage.enemy_attack;
+	
+	            this.setState({ health: user_health, enemies_health: enemies_health });
+	
+	            //If user is beaten then end game
+	
+	            //Return true if enemy is beaten
+	            if (enemies_health[my_enemy] <= 0) {
+	                return true;
+	            } else {
+	                return false;
+	            }
 	        } //End battle function
 	
 	

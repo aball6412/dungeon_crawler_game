@@ -22,10 +22,10 @@ class App extends React.Component {
             view_start: 0,
             view_end: 850,
             make_map: [],
-            health: 50,
+            health: 200,
             weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
             weapon_number: 0,
-            attack: 5,
+            attack: 20,
             rank: 1,
             enemies_left: 10,
             enemies_health: {}
@@ -92,7 +92,7 @@ class App extends React.Component {
                 
                 //Set enemies initial health
                 var enemies_health = this.state.enemies_health;
-                var initial_health = 20;
+                var initial_health = 100;
                 var key = enemy_location;
                 enemies_health[key] = initial_health;
             }
@@ -108,7 +108,7 @@ class App extends React.Component {
         
         
         //Pick 5 random path cells for health
-        var health_number = 5;
+        var health_number = 10;
         
         var count = 0;
         while (count < health_number) {
@@ -225,6 +225,7 @@ class App extends React.Component {
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
             var attack = this.state.attack;
+            var enemies_left = this.state.enemies_left;
             
             if (map[user_position - 1] != "wall") {
                 
@@ -235,7 +236,7 @@ class App extends React.Component {
                 
                 if (map[user_position - 1] === "weapon") {
                     weapon_number++;
-                    attack += 5;
+                    attack += 20;
                 }
                 
                 if (map[user_position - 1] === "enemy") {
@@ -251,9 +252,15 @@ class App extends React.Component {
                     //Move the user to the left
                     map[user_position - 1] = true;
                     map[user_position] = "path";
+                    
+                    //Reduce enemies left by one if enemy vanquished
+                    if (battle_result === true) {
+                        enemies_left --;
+                    }
+                    
 
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack });
+                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
                     
                 }
                 
@@ -277,6 +284,7 @@ class App extends React.Component {
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
             var attack = this.state.attack;
+            var enemies_left = this.state.enemies_left;
             
             
             //If moving up is not a wall
@@ -288,7 +296,7 @@ class App extends React.Component {
                 
                 if (map[user_position - 50] === "weapon") {
                     weapon_number++;
-                    attack += 5;
+                    attack += 20;
                 }
                 
                 if (map[user_position - 50] === "enemy") {
@@ -305,14 +313,19 @@ class App extends React.Component {
                     //Move the user up
                     map[user_position - 50] = true;
                     map[user_position] = "path";
+                    
+                    //Reduce enemies left by one if enemy vanquished
+                    if (battle_result === true) {
+                        enemies_left --;
+                    }
 
                     if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
-                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack });
+                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
                     }
 
                     else {
                         //Set the new map and new user position
-                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack });
+                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
                     }
                     
                     
@@ -340,6 +353,7 @@ class App extends React.Component {
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
             var attack = this.state.attack;
+            var enemies_left = this.state.enemies_left;
             
               
             if (map[user_position + 1] != "wall") {
@@ -350,7 +364,7 @@ class App extends React.Component {
                 
                 if (map[user_position + 1] === "weapon") {
                     weapon_number++;
-                    attack += 5;
+                    attack += 20;
                 }
                 
                 if (map[user_position + 1] === "enemy") {
@@ -366,9 +380,14 @@ class App extends React.Component {
                     //Move the user up
                     map[user_position + 1] = true;
                     map[user_position] = "path";
+                    
+                    //Reduce enemies left by one if enemy vanquished
+                    if (battle_result === true) {
+                        enemies_left --;
+                    }
 
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack });
+                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
                     
                 }
                 
@@ -394,6 +413,7 @@ class App extends React.Component {
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
             var attack = this.state.attack;
+            var enemies_left = this.state.enemies_left;
             
 
             if (map[user_position + 50] != "wall") {
@@ -404,7 +424,7 @@ class App extends React.Component {
                 
                 if (map[user_position + 50] === "weapon") {
                     weapon_number++;
-                    attack += 5;
+                    attack += 20;
                 }
                 
                 if (map[user_position + 50] === "enemy") {
@@ -421,15 +441,20 @@ class App extends React.Component {
                     //Move the user up
                     map[user_position + 50] = true;
                     map[user_position] = "path";
+                    
+                    //Reduce enemies left by one if enemy vanquished
+                    if (battle_result === true) {
+                        enemies_left --;
+                    }
 
                     //Move the board along if we aren't at the bottom
                     if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
-                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack });
+                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
                     }
 
                     else{
                         //Set the new map and new user position
-                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack });
+                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left });
                     }
   
                 } //End if battle result statement

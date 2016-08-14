@@ -224,6 +224,7 @@ class App extends React.Component {
             //Get game variables that we might need
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
+            var attack = this.state.attack;
             
             if (map[user_position - 1] != "wall") {
                 
@@ -234,6 +235,7 @@ class App extends React.Component {
                 
                 if (map[user_position - 1] === "weapon") {
                     weapon_number++;
+                    attack += 5;
                 }
                 
                 if (map[user_position - 1] === "enemy") {
@@ -251,7 +253,7 @@ class App extends React.Component {
                     map[user_position] = "path";
 
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number });
+                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack });
                     
                 }
                 
@@ -274,6 +276,7 @@ class App extends React.Component {
             //Get game variables that we might need
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
+            var attack = this.state.attack;
             
             
             //If moving up is not a wall
@@ -285,6 +288,7 @@ class App extends React.Component {
                 
                 if (map[user_position - 50] === "weapon") {
                     weapon_number++;
+                    attack += 5;
                 }
                 
                 if (map[user_position - 50] === "enemy") {
@@ -303,12 +307,12 @@ class App extends React.Component {
                     map[user_position] = "path";
 
                     if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
-                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number });
+                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack });
                     }
 
                     else {
                         //Set the new map and new user position
-                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number });
+                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack });
                     }
                     
                     
@@ -335,6 +339,7 @@ class App extends React.Component {
             //Get game variables that we might need
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
+            var attack = this.state.attack;
             
               
             if (map[user_position + 1] != "wall") {
@@ -345,6 +350,7 @@ class App extends React.Component {
                 
                 if (map[user_position + 1] === "weapon") {
                     weapon_number++;
+                    attack += 5;
                 }
                 
                 if (map[user_position + 1] === "enemy") {
@@ -362,7 +368,7 @@ class App extends React.Component {
                     map[user_position] = "path";
 
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number });
+                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack });
                     
                 }
                 
@@ -387,6 +393,7 @@ class App extends React.Component {
             //Get game variables that we might need
             var health = this.state.health;
             var weapon_number = this.state.weapon_number;
+            var attack = this.state.attack;
             
 
             if (map[user_position + 50] != "wall") {
@@ -397,6 +404,7 @@ class App extends React.Component {
                 
                 if (map[user_position + 50] === "weapon") {
                     weapon_number++;
+                    attack += 5;
                 }
                 
                 if (map[user_position + 50] === "enemy") {
@@ -416,12 +424,12 @@ class App extends React.Component {
 
                     //Move the board along if we aren't at the bottom
                     if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
-                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number });
+                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack });
                     }
 
                     else{
                         //Set the new map and new user position
-                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number });
+                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack });
                     }
   
                 } //End if battle result statement

@@ -22,13 +22,13 @@ class App extends React.Component {
             view_start: 0,
             view_end: 850,
             make_map: [],
-            health: 100,
+            health: 1000,
             weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
             weapon_number: 0,
             attack: 20,
             rank: 1,
             xp: 0,
-            enemies_left: 10,
+            enemies_left: 5,
             enemies_health: {},
             enemies_rank: 1,
             boss: false
@@ -79,7 +79,7 @@ class App extends React.Component {
         //Layout enemies, health, weapons
         
         //Pick 10 random path cells for enemies
-        var enemy_number = 10;
+        var enemy_number = 5;
         
         var count = 0;
         while (count < enemy_number) {
@@ -265,6 +265,18 @@ class App extends React.Component {
                     }
                 }
                 
+                
+                //If user has beaten the boss then run game over function and make final user move
+                if (battle_result === "Winner") {
+                    //Move the user to the left
+                    map[user_position - 1] = true;
+                    map[user_position] = "path";
+                    
+                    this.setState({ map: map, user_position: user_position - 1 });
+                    this.game_over("Winner");
+                }
+                
+                
                 if (battle_result === undefined || battle_result === true) {
                     
                     //Move the user to the left
@@ -375,6 +387,18 @@ class App extends React.Component {
                         this.game_over("loser");
                     }
                     
+                }
+                
+                
+                //If user has beaten the boss then run game over function
+                if (battle_result === "Winner") {
+                    //Move the user up
+                    map[user_position - 50] = true;
+                    map[user_position] = "path";
+                    
+                    this.setState({ map: map, user_position: user_position - 50 });
+                    
+                    this.game_over("Winner");
                 }
                 
                 
@@ -496,6 +520,18 @@ class App extends React.Component {
                     }
                 }
                 
+                
+                //If user has beaten the boss then run game over function
+                if (battle_result === "Winner") {
+                    //Move the user to the right
+                    map[user_position + 1] = true;
+                    map[user_position] = "path";
+                    
+                    this.setState({ map: map, user_position: user_position + 1 });
+                    
+                    this.game_over("Winner");
+                }
+                
                 if (battle_result === undefined || battle_result === true) {
                     
                     //Move the user up
@@ -603,8 +639,19 @@ class App extends React.Component {
                             this.setState({ health: health });
                         }
                         
-                        this.game_over("loser");
+                        this.game_over("Loser");
                     }
+                }
+                
+                //If user has beaten the boss then run game over function
+                if (battle_result === "Winner") {
+                    //Move the user down
+                    map[user_position + 50] = true;
+                    map[user_position] = "path";
+                    
+                    this.setState({ map: map, user_position: user_position + 50 });
+                    
+                    this.game_over("Winner");
                 }
                 
                 
@@ -728,13 +775,25 @@ class App extends React.Component {
       
         
         
-        //If user is beaten then end game
+        //Check to see if there are any enemies left
+        //First see if we are on the boss or not
+        var boss = this.state.boss;
         
-        //Return true if enemy is beaten
-        if (enemies_health[my_enemy] <= 0) {
-            return true;
+        var count = 0;
+        for (var key in enemies_health) {
+            if (enemies_health[key] > 0) {
+                count++;
+            }
         }
         
+
+        //Return true if enemy is beaten and return "Winner" if Boss is beaten
+        if (count === 0 && boss === true) {
+            return "Winner";
+        }
+        else if (enemies_health[my_enemy] <= 0) {
+            return true;
+        }    
         else {
             return false;
         }

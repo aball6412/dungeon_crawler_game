@@ -102,7 +102,8 @@
 	            enemies_left: 5,
 	            enemies_health: {},
 	            enemies_rank: 1,
-	            boss: false
+	            boss: false,
+	            game_over: false
 	        };
 	
 	        return _this;
@@ -785,98 +786,173 @@
 	        value: function game_over(result) {
 	
 	            console.log("You are a " + result);
+	
+	            this.setState({ game_over: result });
 	        } //End game over function
 	
 	
 	    }, {
 	        key: "render",
 	        value: function render() {
+	            var _this2 = this;
 	
 	            //Get initial variables
 	            var map = this.state.map;
 	            var view_start = this.state.view_start;
 	            var view_end = this.state.view_end;
 	            var cells = [];
+	            var game_over = this.state.game_over;
 	
 	            for (var i = view_start; i < view_end; i++) {
 	
 	                cells.push(_react2.default.createElement(_cell2.default, { key: i, count: i, cell_state: map[i], check_cell: this.check_cell.bind(this) }));
 	            }
 	
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
+	            //If game is on-going then...
+	            if (game_over === false) {
+	
+	                return _react2.default.createElement(
 	                    "div",
-	                    { className: "stats" },
+	                    null,
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "stat_item" },
+	                        { className: "stats" },
 	                        _react2.default.createElement(
-	                            "h4",
-	                            null,
-	                            "Health: ",
-	                            this.state.health
+	                            "div",
+	                            { className: "stat_item" },
+	                            _react2.default.createElement(
+	                                "h4",
+	                                null,
+	                                "Health: ",
+	                                this.state.health
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "stat_item" },
+	                            _react2.default.createElement(
+	                                "h4",
+	                                null,
+	                                "Weapon: ",
+	                                this.state.weapon[this.state.weapon_number]
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "stat_item" },
+	                            _react2.default.createElement(
+	                                "h4",
+	                                null,
+	                                "Attack: ",
+	                                this.state.attack
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "stat_item" },
+	                            _react2.default.createElement(
+	                                "h4",
+	                                null,
+	                                "Rank: ",
+	                                this.state.rank
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "stat_item" },
+	                            _react2.default.createElement(
+	                                "h4",
+	                                null,
+	                                "XP: ",
+	                                this.state.xp
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "stat_item" },
+	                            _react2.default.createElement(
+	                                "h4",
+	                                null,
+	                                "Enemies Remaining: ",
+	                                this.state.enemies_left
+	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "stat_item" },
-	                        _react2.default.createElement(
-	                            "h4",
-	                            null,
-	                            "Weapon: ",
-	                            this.state.weapon[this.state.weapon_number]
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "stat_item" },
-	                        _react2.default.createElement(
-	                            "h4",
-	                            null,
-	                            "Attack: ",
-	                            this.state.attack
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "stat_item" },
-	                        _react2.default.createElement(
-	                            "h4",
-	                            null,
-	                            "Rank: ",
-	                            this.state.rank
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "stat_item" },
-	                        _react2.default.createElement(
-	                            "h4",
-	                            null,
-	                            "XP: ",
-	                            this.state.xp
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "stat_item" },
-	                        _react2.default.createElement(
-	                            "h4",
-	                            null,
-	                            "Enemies Remaining: ",
-	                            this.state.enemies_left
-	                        )
+	                        { className: "map" },
+	                        cells
 	                    )
-	                ),
-	                _react2.default.createElement(
+	                );
+	            } else if (game_over === "Winner") {
+	
+	                return _react2.default.createElement(
 	                    "div",
 	                    { className: "map" },
-	                    cells
-	                )
-	            );
-	        }
+	                    _react2.default.createElement(
+	                        "h2",
+	                        null,
+	                        "You Win!!"
+	                    ),
+	                    _react2.default.createElement(
+	                        "h2",
+	                        null,
+	                        "Play again?"
+	                    ),
+	                    _react2.default.createElement(
+	                        "button",
+	                        { onClick: function onClick() {
+	
+	                                _this2.setState({
+	                                    map: [],
+	                                    user_position: null,
+	                                    view_start: 0,
+	                                    view_end: 850,
+	                                    make_map: [],
+	                                    health: 1000,
+	                                    weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
+	                                    weapon_number: 0,
+	                                    attack: 20,
+	                                    rank: 1,
+	                                    xp: 0,
+	                                    enemies_left: 5,
+	                                    enemies_health: {},
+	                                    enemies_rank: 1,
+	                                    boss: false,
+	                                    game_over: false
+	                                });
+	
+	                                _this2.setup();
+	                            },
+	
+	                            type: "button", className: "btn btn-success" },
+	                        "Yes"
+	                    )
+	                );
+	            } else if (game_over === "Loser") {
+	
+	                return _react2.default.createElement(
+	                    "div",
+	                    { className: "map" },
+	                    _react2.default.createElement(
+	                        "h2",
+	                        null,
+	                        "You Lose."
+	                    ),
+	                    _react2.default.createElement(
+	                        "h2",
+	                        null,
+	                        "Play again?"
+	                    ),
+	                    _react2.default.createElement(
+	                        "button",
+	                        { onClick: this.setup(), type: "button", className: "btn btn-success" },
+	                        "Yes"
+	                    )
+	                );
+	            }
+	        } //End render
+	
 	    }]);
 	
 	    return App;

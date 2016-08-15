@@ -31,7 +31,8 @@ class App extends React.Component {
             enemies_left: 5,
             enemies_health: {},
             enemies_rank: 1,
-            boss: false
+            boss: false,
+            game_over: false
         }
         
         
@@ -808,6 +809,8 @@ class App extends React.Component {
         
         console.log("You are a " + result);
         
+        this.setState({ game_over: result });
+        
     } //End game over function
     
     
@@ -818,6 +821,7 @@ class App extends React.Component {
         var view_start = this.state.view_start;
         var view_end = this.state.view_end;
         var cells = [];
+        var game_over = this.state.game_over;
         
         
         
@@ -827,7 +831,11 @@ class App extends React.Component {
             
         }
         
-        return (
+    
+        //If game is on-going then...
+        if (game_over === false) {
+            
+            return (
         
                 <div>
                  
@@ -878,9 +886,66 @@ class App extends React.Component {
                  
                 </div>
 
+            );
+            
+        }
+            
+        else if (game_over === "Winner") {
+            
+            return (
+                
+                <div className="map">
+                    <h2>You Win!!</h2>
+                    <h2>Play again?</h2>
+                    <button onClick={ () => {
+                
+                
+                                        this.setState({
+                                            map: [],
+                                            user_position: null,
+                                            view_start: 0,
+                                            view_end: 850,
+                                            make_map: [],
+                                            health: 1000,
+                                            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
+                                            weapon_number: 0,
+                                            attack: 20,
+                                            rank: 1,
+                                            xp: 0,
+                                            enemies_left: 5,
+                                            enemies_health: {},
+                                            enemies_rank: 1,
+                                            boss: false,
+                                            game_over: false
+                                        });
+                
+                                        this.setup();
+                                    } } 
+    
+                    type="button" className="btn btn-success">Yes</button>
+                    
+                </div>
+            
+            );
+        }
+            
+        else if (game_over === "Loser") {
+            
+            return (
+            
+                <div className="map">
+                    <h2>You Lose.</h2>
+                    <h2>Play again?</h2>
+                    <button onClick={ this.setup() } type="button" className="btn btn-success">Yes</button>
+                </div>
+            
+            );
+        }
+            
+            
         
-        );
-    }
+    
+    } //End render
     
 } //End app component
 

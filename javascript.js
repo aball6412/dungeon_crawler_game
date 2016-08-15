@@ -30,6 +30,7 @@ class App extends React.Component {
             xp: 0,
             enemies_left: 10,
             enemies_health: {},
+            boss: false
         }
         
         
@@ -229,6 +230,7 @@ class App extends React.Component {
             var enemies_left = this.state.enemies_left;
             var xp = this.state.xp;
             var rank = this.state.rank;
+            var boss = this.state.boss;
             
             if (map[user_position - 1] != "wall") {
                 
@@ -267,8 +269,9 @@ class App extends React.Component {
                             health += 100;
                         }
                         //Once all enemies are defeated add a boss
-                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
-                            enemies_left = "Find the Boss!!";
+                        if (enemies_left <= 0 && boss != true) {
+                            enemies_left = 0;
+                            boss = true;
                             //Add the boss to the map
                             map[2154] = "enemy";
                             map[2204] = "enemy";
@@ -289,7 +292,7 @@ class App extends React.Component {
                     
 
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
+                    this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
                     
                 }
                 
@@ -316,6 +319,7 @@ class App extends React.Component {
             var enemies_left = this.state.enemies_left;
             var xp = this.state.xp;
             var rank = this.state.rank;
+            var boss = this.state.boss;
             
             
             //If moving up is not a wall
@@ -356,8 +360,9 @@ class App extends React.Component {
                             health += 100;
                         }
                         //Once all enemies are defeated add a boss
-                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
-                            enemies_left = "Find the Boss!!";
+                        if (enemies_left <= 0 && boss != true) {
+                            enemies_left = 0;
+                            boss = true;
                             //Add the boss to the map
                             map[2154] = "enemy";
                             map[2204] = "enemy";
@@ -375,12 +380,12 @@ class App extends React.Component {
                     }
 
                     if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
-                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
+                        this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
                     }
 
                     else {
                         //Set the new map and new user position
-                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
+                        this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
                     }
                     
                     
@@ -411,6 +416,7 @@ class App extends React.Component {
             var enemies_left = this.state.enemies_left;
             var xp = this.state.xp;
             var rank = this.state.rank;
+            var boss = this.state.boss;
             
               
             if (map[user_position + 1] != "wall") {
@@ -449,8 +455,9 @@ class App extends React.Component {
                             health += 100;
                         }
                         //Once all enemies are defeated add a boss
-                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
-                            enemies_left = "Find the Boss!!";
+                        if (enemies_left <= 0 && boss != true) {
+                            enemies_left = 0;
+                            boss = true;
                             //Add the boss to the map
                             map[2154] = "enemy";
                             map[2204] = "enemy";
@@ -469,7 +476,7 @@ class App extends React.Component {
                     }
 
                     //Set the new map and new user position
-                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
+                    this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
                     
                 }
                 
@@ -498,6 +505,7 @@ class App extends React.Component {
             var enemies_left = this.state.enemies_left;
             var xp = this.state.xp;
             var rank = this.state.rank;
+            var boss = this.state.boss;
             
 
             if (map[user_position + 50] != "wall") {
@@ -537,8 +545,9 @@ class App extends React.Component {
                             health += 100;
                         }
                         //Once all enemies are defeated add a boss
-                        if (enemies_left <= 0 && enemies_left != "Find the Boss!!") {
-                            enemies_left = "Find the Boss!!";
+                        if (enemies_left <= 0 && boss != true) {
+                            enemies_left = 0;
+                            boss = true;
                             //Add the boss to the map
                             map[2154] = "enemy";
                             map[2204] = "enemy";
@@ -558,12 +567,12 @@ class App extends React.Component {
 
                     //Move the board along if we aren't at the bottom
                     if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
-                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
+                        this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
                     }
 
                     else{
                         //Set the new map and new user position
-                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank });
+                        this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
                     }
   
                 } //End if battle result statement

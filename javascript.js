@@ -293,7 +293,15 @@ class App extends React.Component {
                         
                     }
                     
+                    
+                    
+                    //If on boss then keep enemies left at 0
+                    if (boss == true) {
+                        enemies_left = 0;
+                    }
 
+                    
+                    
                     //Set the new map and new user position
                     this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
                     
@@ -383,6 +391,16 @@ class App extends React.Component {
                             enemies_health[2155] = initial_health;
                         }
                     }
+                    
+                    
+                    
+                    
+                    //If on boss then keep enemies left at 0
+                    if (boss == true) {
+                        enemies_left = 0;
+                    }
+                    
+                    
 
                     if ((user_position - 400) >= view_start && (user_position - 400) < view_start + 50 && (user_position - 400)  > 49) {
                         this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
@@ -481,7 +499,16 @@ class App extends React.Component {
                         }
                       
                     }
+                    
+                    
+                    
+                    //If on boss then keep enemies left at 0
+                    if (boss == true) {
+                        enemies_left = 0;
+                    }
 
+                    
+                    
                     //Set the new map and new user position
                     this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
                     
@@ -573,7 +600,16 @@ class App extends React.Component {
                         }
                         
                     }
+                    
+                    
+                    
+                    //If on boss then keep enemies left at 0
+                    if (boss == true) {
+                        enemies_left = 0;
+                    }
+                    
 
+                    
                     //Move the board along if we aren't at the bottom
                     if ((user_position + 400) <= view_end && (user_position + 400) > view_end - 50 && (user_position + 400)  < 2950) {
                         this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });

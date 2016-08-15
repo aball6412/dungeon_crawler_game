@@ -28,7 +28,7 @@ class App extends React.Component {
             attack: 20,
             rank: 1,
             xp: 0,
-            enemies_left: 5,
+            enemies_left: 10,
             enemies_health: {},
             enemies_rank: 1,
             boss: false,
@@ -65,7 +65,7 @@ class App extends React.Component {
             attack: 20,
             rank: 1,
             xp: 0,
-            enemies_left: 5,
+            enemies_left: 10,
             enemies_health: {},
             enemies_rank: 1,
             boss: false,
@@ -101,7 +101,7 @@ class App extends React.Component {
         //Layout enemies, health, weapons
         
         //Pick 10 random path cells for enemies
-        var enemy_number = 5;
+        var enemy_number = 10;
         var enemies_health = {};
         
         var count = 0;
@@ -911,9 +911,9 @@ class App extends React.Component {
             
             return (
                 
-                <div className="map">
-                    <h2>You Win!!</h2>
-                    <h2>Play again?</h2>
+                <div className="alert alert-success map" role="alert">
+                    <h2 className="text-center">You Win!!</h2>
+                    <h4 className="text-center">Play again?</h4>
                     <button onClick={ () => { this.setup(); } } 
                     type="button" className="btn btn-success">Yes</button>
                     
@@ -926,9 +926,9 @@ class App extends React.Component {
             
             return (
             
-                <div className="map">
-                    <h2>You Lose.</h2>
-                    <h2>Play again?</h2>
+                <div className="alert alert-danger map" role="alert">
+                    <h2 className="text-center">You Lose.</h2>
+                    <h4 className="text-center">Play again?</h4>
                     <button onClick={ () => { this.setup(); } } 
     
                     type="button" className="btn btn-success">Yes</button>

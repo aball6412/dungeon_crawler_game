@@ -99,7 +99,7 @@
 	            attack: 20,
 	            rank: 1,
 	            xp: 0,
-	            enemies_left: 5,
+	            enemies_left: 10,
 	            enemies_health: {},
 	            enemies_rank: 1,
 	            boss: false,
@@ -139,7 +139,7 @@
 	                attack: 20,
 	                rank: 1,
 	                xp: 0,
-	                enemies_left: 5,
+	                enemies_left: 10,
 	                enemies_health: {},
 	                enemies_rank: 1,
 	                boss: false,
@@ -172,7 +172,7 @@
 	            //Layout enemies, health, weapons
 	
 	            //Pick 10 random path cells for enemies
-	            var enemy_number = 5;
+	            var enemy_number = 10;
 	            var enemies_health = {};
 	
 	            var count = 0;
@@ -906,15 +906,15 @@
 	
 	                return _react2.default.createElement(
 	                    "div",
-	                    { className: "map" },
+	                    { className: "alert alert-success map", role: "alert" },
 	                    _react2.default.createElement(
 	                        "h2",
-	                        null,
+	                        { className: "text-center" },
 	                        "You Win!!"
 	                    ),
 	                    _react2.default.createElement(
-	                        "h2",
-	                        null,
+	                        "h4",
+	                        { className: "text-center" },
 	                        "Play again?"
 	                    ),
 	                    _react2.default.createElement(
@@ -930,15 +930,15 @@
 	
 	                return _react2.default.createElement(
 	                    "div",
-	                    { className: "map" },
+	                    { className: "alert alert-danger map", role: "alert" },
 	                    _react2.default.createElement(
 	                        "h2",
-	                        null,
+	                        { className: "text-center" },
 	                        "You Lose."
 	                    ),
 	                    _react2.default.createElement(
-	                        "h2",
-	                        null,
+	                        "h4",
+	                        { className: "text-center" },
 	                        "Play again?"
 	                    ),
 	                    _react2.default.createElement(

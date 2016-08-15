@@ -64,10 +64,7 @@ var Cell = function(props) {
         
     }
     
-    
-    
-    
-    
+
 } //End cell component
 
 

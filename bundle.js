@@ -101,6 +101,7 @@
 	            xp: 0,
 	            enemies_left: 10,
 	            enemies_health: {},
+	            enemies_rank: 1,
 	            boss: false
 	        };
 	
@@ -291,6 +292,7 @@
 	                var xp = this.state.xp;
 	                var rank = this.state.rank;
 	                var boss = this.state.boss;
+	                var enemies_rank = this.state.enemies_rank;
 	
 	                if (map[user_position - 1] != "wall") {
 	
@@ -305,7 +307,7 @@
 	
 	                    if (map[user_position - 1] === "enemy") {
 	                        var enemy_index = user_position - 1;
-	                        var battle_result = this.battle(enemy_index);
+	                        var battle_result = this.battle(enemy_index, enemies_rank);
 	
 	                        //Need to get health variable from state again due to any changes from battle result function
 	                        health = this.state.health;
@@ -330,6 +332,7 @@
 	                            //Once all enemies are defeated add a boss
 	                            if (enemies_left <= 0 && boss != true) {
 	                                enemies_left = 0;
+	                                enemies_rank = 2;
 	                                boss = true;
 	                                //Add the boss to the map
 	                                map[2154] = "enemy";
@@ -348,7 +351,7 @@
 	                        }
 	
 	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
+	                        this.setState({ map: map, user_position: user_position - 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
 	                    }
 	                }
 	            } else if (event.keyCode === 38) {
@@ -368,6 +371,7 @@
 	                var xp = this.state.xp;
 	                var rank = this.state.rank;
 	                var boss = this.state.boss;
+	                var enemies_rank = this.state.enemies_rank;
 	
 	                //If moving up is not a wall
 	                if (map[user_position - 50] != "wall") {
@@ -383,7 +387,7 @@
 	
 	                    if (map[user_position - 50] === "enemy") {
 	                        var enemy_index = user_position - 50;
-	                        var battle_result = this.battle(enemy_index);
+	                        var battle_result = this.battle(enemy_index, enemies_rank);
 	
 	                        //Need to get health variable from state again due to any changes from battle result function
 	                        health = this.state.health;
@@ -408,6 +412,7 @@
 	                            //Once all enemies are defeated add a boss
 	                            if (enemies_left <= 0 && boss != true) {
 	                                enemies_left = 0;
+	                                enemies_rank = 2;
 	                                boss = true;
 	                                //Add the boss to the map
 	                                map[2154] = "enemy";
@@ -426,10 +431,10 @@
 	                        }
 	
 	                        if (user_position - 400 >= view_start && user_position - 400 < view_start + 50 && user_position - 400 > 49) {
-	                            this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
+	                            this.setState({ map: map, user_position: user_position - 50, view_start: view_start - 50, view_end: view_end - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
 	                        } else {
 	                            //Set the new map and new user position
-	                            this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
+	                            this.setState({ map: map, user_position: user_position - 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
 	                        }
 	                    } //End if battle result statement
 	
@@ -451,6 +456,7 @@
 	                var xp = this.state.xp;
 	                var rank = this.state.rank;
 	                var boss = this.state.boss;
+	                var enemies_rank = this.state.enemies_rank;
 	
 	                if (map[user_position + 1] != "wall") {
 	
@@ -465,7 +471,7 @@
 	
 	                    if (map[user_position + 1] === "enemy") {
 	                        var enemy_index = user_position + 1;
-	                        var battle_result = this.battle(enemy_index);
+	                        var battle_result = this.battle(enemy_index, enemies_rank);
 	
 	                        //Need to get health variable from state again due to any changes from battle result function
 	                        health = this.state.health;
@@ -490,6 +496,7 @@
 	                            //Once all enemies are defeated add a boss
 	                            if (enemies_left <= 0 && boss != true) {
 	                                enemies_left = 0;
+	                                enemies_rank = 2;
 	                                boss = true;
 	                                //Add the boss to the map
 	                                map[2154] = "enemy";
@@ -508,7 +515,7 @@
 	                        }
 	
 	                        //Set the new map and new user position
-	                        this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
+	                        this.setState({ map: map, user_position: user_position + 1, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
 	                    }
 	                }
 	            } else if (event.keyCode === 40) {
@@ -529,6 +536,7 @@
 	                var xp = this.state.xp;
 	                var rank = this.state.rank;
 	                var boss = this.state.boss;
+	                var enemies_rank = this.state.enemies_rank;
 	
 	                if (map[user_position + 50] != "wall") {
 	
@@ -543,7 +551,7 @@
 	
 	                    if (map[user_position + 50] === "enemy") {
 	                        var enemy_index = user_position + 50;
-	                        var battle_result = this.battle(enemy_index);
+	                        var battle_result = this.battle(enemy_index, enemies_rank);
 	
 	                        //Need to get health variable from state again due to any changes from battle result function
 	                        health = this.state.health;
@@ -568,6 +576,7 @@
 	                            //Once all enemies are defeated add a boss
 	                            if (enemies_left <= 0 && boss != true) {
 	                                enemies_left = 0;
+	                                enemies_rank = 2;
 	                                boss = true;
 	                                //Add the boss to the map
 	                                map[2154] = "enemy";
@@ -587,10 +596,10 @@
 	
 	                        //Move the board along if we aren't at the bottom
 	                        if (user_position + 400 <= view_end && user_position + 400 > view_end - 50 && user_position + 400 < 2950) {
-	                            this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
+	                            this.setState({ map: map, user_position: user_position + 50, view_start: view_start + 50, view_end: view_end + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
 	                        } else {
 	                            //Set the new map and new user position
-	                            this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss });
+	                            this.setState({ map: map, user_position: user_position + 50, health: health, weapon_number: weapon_number, attack: attack, enemies_left: enemies_left, xp: xp, rank: rank, boss: boss, enemies_rank: enemies_rank });
 	                        }
 	                    } //End if battle result statement
 	
@@ -602,14 +611,16 @@
 	
 	    }, {
 	        key: "battle",
-	        value: function battle(enemy_index) {
+	        value: function battle(enemy_index, enemies_rank) {
 	
 	            //Set up random battle damange function
-	            var battle_damage = function battle_damage(attack) {
+	            var battle_damage = function battle_damage(attack, enemies_rank) {
+	
+	                console.log(enemies_rank);
 	
 	                //Get enemy attack impact
 	                var random = Math.floor(Math.random() * 3 + 1);
-	                var base_damage = 10;
+	                var base_damage = 10 * enemies_rank;
 	                var total_damage = base_damage * random;
 	
 	                //Get user attack impact
@@ -634,7 +645,7 @@
 	            var attack = this.state.attack * this.state.rank;
 	
 	            //Run the battle simulation
-	            var battle_damage = battle_damage(attack);
+	            var battle_damage = battle_damage(attack, enemies_rank);
 	
 	            //Set new enemy and user health after battle
 	            enemies_health[my_enemy] = enemies_health[my_enemy] - battle_damage.user_attack;

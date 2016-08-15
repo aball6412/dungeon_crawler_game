@@ -93,7 +93,7 @@
 	            view_start: 0,
 	            view_end: 850,
 	            make_map: [],
-	            health: 1000,
+	            health: 200,
 	            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
 	            weapon_number: 0,
 	            attack: 20,
@@ -126,6 +126,26 @@
 	        key: "setup",
 	        value: function setup() {
 	
+	            //Set the default initial state of game
+	            this.setState({
+	                map: [],
+	                user_position: null,
+	                view_start: 0,
+	                view_end: 850,
+	                make_map: [],
+	                health: 200,
+	                weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
+	                weapon_number: 0,
+	                attack: 20,
+	                rank: 1,
+	                xp: 0,
+	                enemies_left: 5,
+	                enemies_health: {},
+	                enemies_rank: 1,
+	                boss: false,
+	                game_over: false
+	            });
+	
 	            //Set up initial map space
 	            var map = [];
 	
@@ -153,6 +173,7 @@
 	
 	            //Pick 10 random path cells for enemies
 	            var enemy_number = 5;
+	            var enemies_health = {};
 	
 	            var count = 0;
 	            while (count < enemy_number) {
@@ -167,7 +188,6 @@
 	                    map[enemy_location] = "enemy";
 	
 	                    //Set enemies initial health
-	                    var enemies_health = this.state.enemies_health;
 	                    var initial_health = 100;
 	                    var key = enemy_location;
 	                    enemies_health[key] = initial_health;
@@ -321,7 +341,7 @@
 	                                this.setState({ health: health });
 	                            }
 	
-	                            this.game_over("loser");
+	                            this.game_over("Loser");
 	                        }
 	                    }
 	
@@ -427,7 +447,7 @@
 	                                this.setState({ health: health });
 	                            }
 	
-	                            this.game_over("loser");
+	                            this.game_over("Loser");
 	                        }
 	                    }
 	
@@ -538,7 +558,7 @@
 	                                this.setState({ health: health });
 	                            }
 	
-	                            this.game_over("loser");
+	                            this.game_over("Loser");
 	                        }
 	                    }
 	
@@ -785,8 +805,6 @@
 	        key: "game_over",
 	        value: function game_over(result) {
 	
-	            console.log("You are a " + result);
-	
 	            this.setState({ game_over: result });
 	        } //End game over function
 	
@@ -902,29 +920,8 @@
 	                    _react2.default.createElement(
 	                        "button",
 	                        { onClick: function onClick() {
-	
-	                                _this2.setState({
-	                                    map: [],
-	                                    user_position: null,
-	                                    view_start: 0,
-	                                    view_end: 850,
-	                                    make_map: [],
-	                                    health: 1000,
-	                                    weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
-	                                    weapon_number: 0,
-	                                    attack: 20,
-	                                    rank: 1,
-	                                    xp: 0,
-	                                    enemies_left: 5,
-	                                    enemies_health: {},
-	                                    enemies_rank: 1,
-	                                    boss: false,
-	                                    game_over: false
-	                                });
-	
 	                                _this2.setup();
 	                            },
-	
 	                            type: "button", className: "btn btn-success" },
 	                        "Yes"
 	                    )
@@ -946,7 +943,11 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        "button",
-	                        { onClick: this.setup(), type: "button", className: "btn btn-success" },
+	                        { onClick: function onClick() {
+	                                _this2.setup();
+	                            },
+	
+	                            type: "button", className: "btn btn-success" },
 	                        "Yes"
 	                    )
 	                );

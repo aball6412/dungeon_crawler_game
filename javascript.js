@@ -22,7 +22,7 @@ class App extends React.Component {
             view_start: 0,
             view_end: 850,
             make_map: [],
-            health: 1000,
+            health: 200,
             weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
             weapon_number: 0,
             attack: 20,
@@ -51,6 +51,27 @@ class App extends React.Component {
     }
     
     setup() {
+        
+        //Set the default initial state of game
+        this.setState({
+            map: [],
+            user_position: null,
+            view_start: 0,
+            view_end: 850,
+            make_map: [],
+            health: 200,
+            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
+            weapon_number: 0,
+            attack: 20,
+            rank: 1,
+            xp: 0,
+            enemies_left: 5,
+            enemies_health: {},
+            enemies_rank: 1,
+            boss: false,
+            game_over: false
+        });
+        
         
         //Set up initial map space
         var map = [];
@@ -81,6 +102,7 @@ class App extends React.Component {
         
         //Pick 10 random path cells for enemies
         var enemy_number = 5;
+        var enemies_health = {};
         
         var count = 0;
         while (count < enemy_number) {
@@ -95,7 +117,6 @@ class App extends React.Component {
                 map[enemy_location] = "enemy";
                 
                 //Set enemies initial health
-                var enemies_health = this.state.enemies_health;
                 var initial_health = 100;
                 var key = enemy_location;
                 enemies_health[key] = initial_health;
@@ -162,7 +183,6 @@ class App extends React.Component {
             }
             
         } //End while loop
-        
         
   
         //Set state
@@ -262,7 +282,7 @@ class App extends React.Component {
                             this.setState({ health: health });
                         }
                         
-                        this.game_over("loser");
+                        this.game_over("Loser");
                     }
                 }
                 
@@ -385,7 +405,7 @@ class App extends React.Component {
                             this.setState({ health: health });
                         }
                         
-                        this.game_over("loser");
+                        this.game_over("Loser");
                     }
                     
                 }
@@ -517,7 +537,7 @@ class App extends React.Component {
                             this.setState({ health: health });
                         }
                         
-                        this.game_over("loser");
+                        this.game_over("Loser");
                     }
                 }
                 
@@ -806,9 +826,6 @@ class App extends React.Component {
     
     game_over(result) {
         
-        
-        console.log("You are a " + result);
-        
         this.setState({ game_over: result });
         
     } //End game over function
@@ -897,31 +914,7 @@ class App extends React.Component {
                 <div className="map">
                     <h2>You Win!!</h2>
                     <h2>Play again?</h2>
-                    <button onClick={ () => {
-                
-                
-                                        this.setState({
-                                            map: [],
-                                            user_position: null,
-                                            view_start: 0,
-                                            view_end: 850,
-                                            make_map: [],
-                                            health: 1000,
-                                            weapon: ["Bare Hands", "Knife", "Sword", "Magic Wand"],
-                                            weapon_number: 0,
-                                            attack: 20,
-                                            rank: 1,
-                                            xp: 0,
-                                            enemies_left: 5,
-                                            enemies_health: {},
-                                            enemies_rank: 1,
-                                            boss: false,
-                                            game_over: false
-                                        });
-                
-                                        this.setup();
-                                    } } 
-    
+                    <button onClick={ () => { this.setup(); } } 
                     type="button" className="btn btn-success">Yes</button>
                     
                 </div>
@@ -936,7 +929,9 @@ class App extends React.Component {
                 <div className="map">
                     <h2>You Lose.</h2>
                     <h2>Play again?</h2>
-                    <button onClick={ this.setup() } type="button" className="btn btn-success">Yes</button>
+                    <button onClick={ () => { this.setup(); } } 
+    
+                    type="button" className="btn btn-success">Yes</button>
                 </div>
             
             );

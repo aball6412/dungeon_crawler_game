@@ -252,6 +252,17 @@ class App extends React.Component {
                     
                     //Need to get health variable from state again due to any changes from battle result function
                     health = this.state.health;
+                    
+                    //If user loses
+                    if (health <= 0) {
+                        health = 0;
+                        
+                        if(battle_result === false) {
+                            this.setState({ health: health });
+                        }
+                        
+                        this.game_over("loser");
+                    }
                 }
                 
                 if (battle_result === undefined || battle_result === true) {
@@ -352,6 +363,18 @@ class App extends React.Component {
                     
                     //Need to get health variable from state again due to any changes from battle result function
                     health = this.state.health;
+                    
+                    //If user loses
+                    if (health <= 0) {
+                        health = 0;
+                        
+                        if(battle_result === false) {
+                            this.setState({ health: health });
+                        }
+                        
+                        this.game_over("loser");
+                    }
+                    
                 }
                 
                 
@@ -460,6 +483,17 @@ class App extends React.Component {
                     
                     //Need to get health variable from state again due to any changes from battle result function
                     health = this.state.health;
+                    
+                    //If user loses
+                    if (health <= 0) {
+                        health = 0;
+                        
+                        if(battle_result === false) {
+                            this.setState({ health: health });
+                        }
+                        
+                        this.game_over("loser");
+                    }
                 }
                 
                 if (battle_result === undefined || battle_result === true) {
@@ -560,6 +594,17 @@ class App extends React.Component {
                     
                     //Need to get health variable from state again due to any changes from battle result function
                     health = this.state.health;
+                    
+                    //If user loses
+                    if (health <= 0) {
+                        health = 0;
+                        
+                        if(battle_result === false) {
+                            this.setState({ health: health });
+                        }
+                        
+                        this.game_over("loser");
+                    }
                 }
                 
                 
@@ -698,6 +743,13 @@ class App extends React.Component {
     } //End battle function
     
     
+    
+    game_over(result) {
+        
+        
+        console.log("You are a " + result);
+        
+    } //End game over function
     
     
     render() {
